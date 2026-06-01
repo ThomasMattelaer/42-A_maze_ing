@@ -1,4 +1,3 @@
-
 NAME = a_maze_ing.py
 VENV = venv
 PYTHON = $(VENV)/bin/python3
