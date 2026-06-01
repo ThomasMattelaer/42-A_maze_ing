@@ -4,20 +4,20 @@ VENV = venv
 PYTHON = $(VENV)/bin/python3
 PIP = $(VENV)/bin/pip
 
-run: $(VENV)/bin/activate
+run: install
 	$(PYTHON) src/${NAME}
-
-$(VENV)/bin/activate: requirements.txt
-	python3 -m venv $(VENV)
-	$(PIP) install -r requirements.txt
 
 clean:
 	rm -rf .mypy_cache
 	rm -rf __pycache__
 	rm -rf venv
 
-install:
-	pip install -r requirements.txt
+install: requirements.txt
+	python3 -m venv $(VENV)
+	$(PIP) install -r requirements.txt
+
+debug: install
+	$(PYTHON) -m pdb src/${NAME}
 
 lint:
 	flake8 --exclude=./venv .
@@ -27,4 +27,4 @@ lint-strict:
 	flake8 --exclude=./venv .
 	mypy . --strict
 
-.PHONY: run install clean
+.PHONY: run install clean lint lint-strict debug
