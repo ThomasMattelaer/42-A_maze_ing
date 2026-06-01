@@ -1,5 +1,6 @@
 
-
 ### TO DO
 - [ ] Errors handling
-- [ ] Configuration file f
+- [ ] Makefile 
+- [ ] Configuration file parsing
+- [ ] Class Maze and generation
