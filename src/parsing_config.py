@@ -140,6 +140,35 @@ def main() -> None:
                 print("'PERFECT' field is expecting ", end="")
                 print("'True' or 'False' as value as follows :")
                 print("PERFECT=True or PERFECT=False")
+    for key in config_dict:
+        if key == "ENTRY":
+            parts = config_dict[key].split(",")
+            x = int(parts[0])
+            y = int(parts[1])
+            if x >= int(config_dict["WIDTH"]):
+                print("The entry point is outside the maze")
+                print("Please check that the maze contains ", end="")
+                print("exactly one entry point")
+                return
+            if y >= int(config_dict["HEIGHT"]):
+                print("The entry point is outside the maze")
+                print("Please check that the maze contains ", end="")
+                print("exactly one entry point")
+                return
+        if key == "EXIT":
+            parts = config_dict[key].split(",")
+            x = int(parts[0])
+            y = int(parts[1])
+            if x >= int(config_dict["WIDTH"]):
+                print("The exit point is outside the maze")
+                print("Please check that the maze contains ", end="")
+                print("exactly one exit point")
+                return
+            if y >= int(config_dict["HEIGHT"]):
+                print("The exit point is outside the maze")
+                print("Please check that the maze contains ", end="")
+                print("exactly one exit point")
+                return
     return
 
 
