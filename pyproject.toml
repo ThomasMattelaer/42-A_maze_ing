@@ -1,0 +1,11 @@
+[project]
+name = "mazegen"
+version = "1.0.0"
+authors = [
+	{name = "Thomas Mattelaer", email = "tmattela@student.42belgium.be"},
+	{name = "Josué Samba Dianzungu", email = "josamba-@student.42belgium.be"}
+	]
+description = "A package to generate a maze"
+readme = "mazegen/README.md"
+requires-python = ">=3.10"
+dependencies = []
