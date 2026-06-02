@@ -1,7 +1,0 @@
-Metadata-Version: 2.4
-Name: mazegen
-Version: 1.0.0
-Summary: A package to generate a maze
-Author-email: Thomas Mattelaer <tmattela@student.42belgium.be>, Josué Samba Dianzungu <josamba-@student.42belgium.be>
-Requires-Python: >=3.10
-Description-Content-Type: text/markdown
