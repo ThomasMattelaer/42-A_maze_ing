@@ -16,15 +16,25 @@ def main() -> None:
 
         parts = line.split("=")
 
-        if parts[0].endswith(" ") or parts[1].startswith(" "):
+        if len(parts) < 2:
+            print("No equal between values OR, ", end="")
+            print("no value before or after the equal")
+            print("Please check that there's one equal between", end="")
+            print(" your key and your value")
+            return
+
+        elif len(parts) > 2:
+            print("Too many equals")
+            print("Please check that there's only one equal between", end="")
+            print(" your key and your value")
+            return
+
+        elif parts[0].endswith(" ") or parts[1].startswith(" "):
             print("For each field, the expected format is :")
             print("field_name=value_expected")
             return
-        try:
+        else:
             config_dict.update({parts[0]: parts[1]})
-        except IndexError:
-            print("No equal between values or, ", end="")
-            print("no value before or after the equal\n")
 
     required_keys = [
         "WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT"
@@ -34,6 +44,7 @@ def main() -> None:
         print("All six mandatory keys are not present, please ", end="")
         print("enter the following fields:")
         print("WIDTH, HEIGHT, ENTRY, EXIT, OUTPUT_FILE, PERFECT")
+        return
 
     for key in config_dict:
 
@@ -55,37 +66,67 @@ def main() -> None:
 
         if key == "ENTRY":
             parts = config_dict[key].split(",")
-            if parts[0].endswith(" ") or parts[1].startswith(" "):
+
+            if len(parts) < 2:
+                print("No ',' between values OR, ", end="")
+                print("no value before or after the ','")
+                print("Please check that there's one comma between", end="")
+                print(" your two numbers")
+                return
+
+            elif len(parts) > 2:
+                print("Too many commas")
+                print("Please check that there's only one ", end="")
+                print("comma between your two numbers")
+                return
+
+            elif parts[0].endswith(" ") or parts[1].startswith(" "):
                 print("'ENTRY' field is expecting ", end="")
                 print("two values ", end="")
                 print("separated by a ',' without spaces as follows :")
                 print("ENTRY=numeric_value,numeric_value")
-            try:
-                parts = config_dict[key].split(",")
-                int(parts[0])
-                int(parts[1])
-            except ValueError:
-                print("'ENTRY' fiels is expecting ", end="")
-                print("two numeric values ", end="")
-                print("outside of the ',' separator:")
-                print("ENTRY=numeric_value,numeric_value")
+            else:
+                try:
+                    parts = config_dict[key].split(",")
+                    int(parts[0])
+                    int(parts[1])
+                except ValueError:
+                    print("'ENTRY' fiels is expecting ", end="")
+                    print("two numeric values ", end="")
+                    print("outside of the ',' separator:")
+                    print("ENTRY=numeric_value,numeric_value")
 
         if key == "EXIT":
             parts = config_dict[key].split(",")
-            if parts[0].endswith(" ") or parts[1].startswith(" "):
+
+            if len(parts) < 2:
+                print("No ',' between values OR, ", end="")
+                print("no value before or after the ','")
+                print("Please check that there's one comma between", end="")
+                print(" your two numbers")
+                return
+
+            elif len(parts) > 2:
+                print("Too many commas")
+                print("Please check that there's only one ", end="")
+                print("comma between your two numbers")
+                return
+
+            elif parts[0].endswith(" ") or parts[1].startswith(" "):
                 print("'EXIT' field is expecting ", end="")
                 print("two values ", end="")
                 print("separated by a ',' without spaces as follows :")
                 print("EXIT=numeric_value,numeric_value")
-            try:
-                parts = config_dict[key].split(",")
-                int(parts[0])
-                int(parts[1])
-            except ValueError:
-                print("'EXIT' fiels is expecting ", end="")
-                print("two numeric values ", end="")
-                print("outside of the ',' separator:")
-                print("EXIT=numeric_value,numeric_value")
+            else:
+                try:
+                    parts = config_dict[key].split(",")
+                    int(parts[0])
+                    int(parts[1])
+                except ValueError:
+                    print("'EXIT' fiels is expecting ", end="")
+                    print("two numeric values ", end="")
+                    print("outside of the ',' separator:")
+                    print("EXIT=numeric_value,numeric_value")
 
         if key == "OUTPUT_FILE":
             if not config_dict[key].endswith(".txt"):
@@ -99,6 +140,7 @@ def main() -> None:
                 print("'PERFECT' field is expecting ", end="")
                 print("'True' or 'False' as value as follows :")
                 print("PERFECT=True or PERFECT=False")
+    return
 
 
 if __name__ == "__main__":
