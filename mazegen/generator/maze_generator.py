@@ -60,56 +60,17 @@ class MazeGenerator():
             r = (start_row + row) * 2 + 1
             c = (start_col + col) * 2 + 1
             maze[r][c] = 5
-        print(maze)
+        self.fulfill42(maze)
 
-
-def get_corner(maze: list[list[int]], row: int, col: int) -> str:
-    rows, cols = len(maze), len(maze[0])
-    N, E, S, W = 1, 2, 4, 8
-
-    on_top = row == 0
-    on_bot = row == rows
-    on_left = col == 0
-    on_right = col == cols
-
-    topl = maze[row-1][col-1] if row > 0 and col > 0 else None
-    topr = maze[row-1][col] if row > 0 and col < cols else None
-    bottoml = maze[row][col-1] if row < rows and col > 0 else None
-    bottomr = maze[row][col] if row < rows and col < cols else None
-
-    vert = (topl and topl & E) or (topr and topr & W) or \
-           (bottoml and bottoml & E) or (bottomr and bottomr & W)
-
-    horiz = (topl and topl & S) or (bottoml and bottoml & N) or \
-            (topr and topr & S) or (bottomr and bottomr & N)
-
-    if on_top and on_left:
-        return '┌'
-    if on_top and on_right:
-        return '┐'
-    if on_bot and on_left:
-        return '└'
-    if on_bot and on_right:
-        return '┘'
-    if on_top:
-        if (vert):
-            return '┬'
-        return '───'
-    if on_bot:
-        if (vert):
-            return '┴'
-        return '───'
-    if on_left:
-        if (horiz):
-            return '├'
-        return '│'
-    if on_right:
-        if (horiz):
-            return '┤'
-        return '│'
-    if (vert and horiz):
-        return '┼'
-    return "   "
+    def fulfill42(self, maze: list[list[int]]) -> None:
+        rows = len(maze)
+        cols = len(maze[0])
+        for r in range(1, rows - 1):
+            for c in range(1, cols - 1):
+                if maze[r][c] == 1:  # c'est un mur
+                    if (maze[r-1][c] == 5 and maze[r+1][c] == 5) or \
+                     (maze[r][c-1] == 5 and maze[r][c+1] == 5):
+                        maze[r][c] = 5
 
 
 def render_matrix(maze: list[list[int]]) -> None:
@@ -117,36 +78,13 @@ def render_matrix(maze: list[list[int]]) -> None:
     chars = {
         1: '\x1b[38;5;16m██\x1b[0m',
         2: '\x1b[48;5;24m  \x1b[0m',
-        5: '\x1b[38;5;200m██\x1b[0m',
+        5: '\x1b[48;5;200m  \x1b[0m',
     }
     for row in maze:
-        print(''.join(chars[cell] for cell in row))
-
-
-def render_tab(maze: list[list[int]]) -> None:
-    rows = len(maze)
-    cols = len(maze[0])
-    color = random.randint(0, 256)
-
-    for row in range(rows + 1):
         line = ""
-        for col in range(cols + 1):
-            line += get_corner(maze, row, col)
-        print(f"\x1b[38;5;{color}m{line}\x1b[0m")
-
-        if row < rows:
-            line = ""
-            for col in range(cols):
-                if maze[row][col] & 8:
-                    line += "│"
-                else:
-                    line += "   "
-
-            if maze[row][cols - 1] & 2:
-                line += "│"
-            else:
-                line += "   "
-            print(line)
+        for cell in row:
+            line += chars[cell]
+        print(line)
 
 
 if __name__ == "__main__":
