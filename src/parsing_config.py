@@ -73,7 +73,6 @@ def main() -> None:
 
         if key == "ENTRY":
             parts = config_dict[key].split(",")
-
             if len(parts) < 2:
                 print("No ',' between values OR, ", end="")
                 print("no value before or after the ','")
@@ -115,20 +114,17 @@ def main() -> None:
 
         if key == "EXIT":
             parts = config_dict[key].split(",")
-
             if len(parts) < 2:
                 print("No ',' between values OR, ", end="")
                 print("no value before or after the ','")
                 print("Please check that there's one comma between", end="")
                 print(" your two numbers")
                 return
-
             elif len(parts) > 2:
                 print("Too many commas")
                 print("Please check that there's only one ", end="")
                 print("comma between your two numbers")
                 return
-
             elif parts[0].endswith(" ") or parts[1].startswith(" "):
                 print("'EXIT' field is expecting ", end="")
                 print("two values ", end="")
