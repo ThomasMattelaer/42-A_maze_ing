@@ -1,7 +1,7 @@
 import typing
 
 
-def main() -> None:
+def parsing_config() -> None:
     config_dict: dict = {}
     f: typing.IO = open("./config.txt")
     content = f.read()
@@ -110,7 +110,7 @@ def main() -> None:
                 elif y >= int(config_dict["HEIGHT"]):
                     print("The entry point is outside the maze")
                     print("Please check that the maze contains ", end="")
-                    print("exactly one entry point")          
+                    print("exactly one entry point")
 
         if key == "EXIT":
             parts = config_dict[key].split(",")
@@ -178,6 +178,10 @@ def main() -> None:
         print("The file name can't just be '.txt'")
         print("Please change the value with a correct file name")
     return
+
+
+def main() -> dict[str, str]:
+    parsing_config()
 
 
 if __name__ == "__main__":
