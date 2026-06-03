@@ -6,7 +6,7 @@ def main() -> None:
     f: typing.IO = open("./config.txt")
     content = f.read()
     f.close()
-    print(f"{content}")
+    print(f"{content}\n")
     lines = content.splitlines()
 
     for line in lines:
@@ -31,7 +31,10 @@ def main() -> None:
 
         elif parts[0].endswith(" ") or parts[1].startswith(" "):
             print("For each field, the expected format is :")
-            print("field_name=value_expected")
+            print("field_name=value")
+            print("Please check that there's no spaces before or ", end="")
+            print("after the equal sign.")
+
             return
         else:
             config_dict.update({parts[0]: parts[1]})
@@ -55,6 +58,7 @@ def main() -> None:
                 print("'WIDTH' field is expecting ", end="")
                 print(" a numeric value as follows :")
                 print("WIDTH=numeric_value")
+                return
 
         if key == "HEIGHT":
             try:
@@ -62,7 +66,10 @@ def main() -> None:
             except ValueError:
                 print("'HEIGHT' field is expecting ", end="")
                 print("a numeric value as follows :")
-                print("WIDTH=numeric_value")
+                print("HEIGHT=numeric_value")
+                return
+
+    for key in config_dict:
 
         if key == "ENTRY":
             parts = config_dict[key].split(",")
@@ -72,13 +79,11 @@ def main() -> None:
                 print("no value before or after the ','")
                 print("Please check that there's one comma between", end="")
                 print(" your two numbers")
-                return
 
             elif len(parts) > 2:
                 print("Too many commas")
                 print("Please check that there's only one ", end="")
                 print("comma between your two numbers")
-                return
 
             elif parts[0].endswith(" ") or parts[1].startswith(" "):
                 print("'ENTRY' field is expecting ", end="")
@@ -88,13 +93,25 @@ def main() -> None:
             else:
                 try:
                     parts = config_dict[key].split(",")
-                    int(parts[0])
-                    int(parts[1])
+                    x = int(parts[0])
+                    y = int(parts[1])
                 except ValueError:
-                    print("'ENTRY' fiels is expecting ", end="")
+                    print("'ENTRY' field is expecting ", end="")
                     print("two numeric values ", end="")
                     print("outside of the ',' separator:")
                     print("ENTRY=numeric_value,numeric_value")
+                if x < 0 or y < 0:
+                    print("Coordinates can't be negatives")
+                    print("Please check that the 'ENTRY'coordinates ", end="")
+                    print("are both positive numbers")
+                elif x >= int(config_dict["WIDTH"]):
+                    print("The entry point is outside the maze")
+                    print("Please check that the maze contains ", end="")
+                    print("exactly one entry point")
+                elif y >= int(config_dict["HEIGHT"]):
+                    print("The entry point is outside the maze")
+                    print("Please check that the maze contains ", end="")
+                    print("exactly one entry point")          
 
         if key == "EXIT":
             parts = config_dict[key].split(",")
@@ -120,13 +137,27 @@ def main() -> None:
             else:
                 try:
                     parts = config_dict[key].split(",")
-                    int(parts[0])
-                    int(parts[1])
+                    x = int(parts[0])
+                    y = int(parts[1])
                 except ValueError:
                     print("'EXIT' fiels is expecting ", end="")
                     print("two numeric values ", end="")
                     print("outside of the ',' separator:")
                     print("EXIT=numeric_value,numeric_value")
+                if x < 0 or y < 0:
+                    print("Coordinates can't be negatives")
+                    print("Please check that the 'ENTRY'coordinates ", end="")
+                    print("are both positive numbers")
+                elif x >= int(config_dict["WIDTH"]):
+                    print("The exit point is outside the maze")
+                    print("Please check that the maze contains ", end="")
+                    print("exactly one exit point")
+                    return
+                elif y >= int(config_dict["HEIGHT"]):
+                    print("The exit point is outside the maze")
+                    print("Please check that the maze contains ", end="")
+                    print("exactly one exit point")
+                    return
 
         if key == "OUTPUT_FILE":
             if not config_dict[key].endswith(".txt"):
@@ -140,35 +171,16 @@ def main() -> None:
                 print("'PERFECT' field is expecting ", end="")
                 print("'True' or 'False' as value as follows :")
                 print("PERFECT=True or PERFECT=False")
-    for key in config_dict:
-        if key == "ENTRY":
-            parts = config_dict[key].split(",")
-            x = int(parts[0])
-            y = int(parts[1])
-            if x >= int(config_dict["WIDTH"]):
-                print("The entry point is outside the maze")
-                print("Please check that the maze contains ", end="")
-                print("exactly one entry point")
-                return
-            if y >= int(config_dict["HEIGHT"]):
-                print("The entry point is outside the maze")
-                print("Please check that the maze contains ", end="")
-                print("exactly one entry point")
-                return
-        if key == "EXIT":
-            parts = config_dict[key].split(",")
-            x = int(parts[0])
-            y = int(parts[1])
-            if x >= int(config_dict["WIDTH"]):
-                print("The exit point is outside the maze")
-                print("Please check that the maze contains ", end="")
-                print("exactly one exit point")
-                return
-            if y >= int(config_dict["HEIGHT"]):
-                print("The exit point is outside the maze")
-                print("Please check that the maze contains ", end="")
-                print("exactly one exit point")
-                return
+
+    if config_dict["ENTRY"] == config_dict["EXIT"]:
+        print("The 'ENTRY' and 'EXIT' points can't have", end="")
+        print(" the same coordinates !")
+        print("Please change the values in at least on field")
+        return
+
+    if len(config_dict["OUTPUT_FILE"]) == 4:
+        print("The file name can't just be '.txt'")
+        print("Please change the value with a correct file name")
     return
 
 
