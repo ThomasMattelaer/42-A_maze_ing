@@ -115,9 +115,9 @@ def get_corner(maze: list[list[int]], row: int, col: int) -> str:
 def render_matrix(maze: list[list[int]]) -> None:
 
     chars = {
-        1: '\x1b[38;5;16m███\x1b[0m',
-        2: '\x1b[48;5;24m   \x1b[0m',
-        5: '\x1b[38;5;200m███\x1b[0m',
+        1: '\x1b[38;5;16m██\x1b[0m',
+        2: '\x1b[48;5;24m  \x1b[0m',
+        5: '\x1b[38;5;200m██\x1b[0m',
     }
     for row in maze:
         print(''.join(chars[cell] for cell in row))
