@@ -5,8 +5,8 @@ class MazeGenerator():
     """Class that handle the generation of the maze"""
 
     def __init__(self,
-                 width: int,
                  height: int,
+                 width: int,
                  entry: tuple[int, int],
                  exit: tuple[int, int],
                  output_file: str,
@@ -35,7 +35,7 @@ class MazeGenerator():
         matrix: list[list[int]] = []
         for row in range(self._height * 2 + 1):
             columns: list[int] = []
-            for col in range(self._height * 2 + 1):
+            for col in range(self._width * 2 + 1):
                 if (col % 2 == 0 or row % 2 == 0):
                     columns.append(1)
                 else:
@@ -52,9 +52,10 @@ class MazeGenerator():
                       (0, 4), (0, 5), (0, 6), (1, 6), (2, 6), (2, 5), (2, 4),
                       (3, 4), (4, 4), (5, 4), (5, 5), (5, 6)
                       ]
-        start_row = (self._height // 2) - (height_42 // 2)
-        start_col = (self._width // 2) - (width_42 // 2)
-        
+        start_row = round((self._height - height_42) / 2)
+        start_col = round((self._width - width_42) / 2)
+        print(f"height={self._height} width={self._width}")
+        print(f"start_row={start_row} start_col={start_col}")
         for row, col in PATTERN_42:
             r = (start_row + row) * 2 + 1
             c = (start_col + col) * 2 + 1
@@ -111,6 +112,17 @@ def get_corner(maze: list[list[int]], row: int, col: int) -> str:
     return "   "
 
 
+def render_matrix(maze: list[list[int]]) -> None:
+
+    chars = {
+        1: '\x1b[38;5;16m███\x1b[0m',
+        2: '\x1b[48;5;24m   \x1b[0m',
+        5: '\x1b[38;5;200m███\x1b[0m',
+    }
+    for row in maze:
+        print(''.join(chars[cell] for cell in row))
+
+
 def render_tab(maze: list[list[int]]) -> None:
     rows = len(maze)
     cols = len(maze[0])
@@ -139,6 +151,7 @@ def render_tab(maze: list[list[int]]) -> None:
 
 if __name__ == "__main__":
 
-    maze = MazeGenerator(10, 10, (10, 2), (10, 2), "test", True)
+    maze = MazeGenerator(12, 15, (10, 2), (10, 2), "test", True)
     init = maze.init_maze()
     maze.setup42(init)
+    render_matrix(init)
