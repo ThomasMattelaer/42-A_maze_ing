@@ -60,7 +60,6 @@ class MazeGenerator():
             r = (start_row + row) * 2 + 1
             c = (start_col + col) * 2 + 1
             maze[r][c] = 5
-        self.fulfill42(maze)
 
     def fulfill42(self, maze: list[list[int]]) -> None:
         rows = len(maze)
@@ -72,13 +71,54 @@ class MazeGenerator():
                      (maze[r][c-1] == 5 and maze[r][c+1] == 5):
                         maze[r][c] = 5
 
+    def generate(self, maze: list[list[int]]) -> None:
+        """Generate all the path of the maze with the DFS algorithm"""
+
+        def oddNumber(a: int, b: int) -> int:
+            number = random.randint(a, b)
+            while (number % 2 == 0):
+                number = random.randint(a, b)
+            return number
+
+        def valid_direction(direction: tuple, pos: tuple,
+                            visited: set[tuple[int, int]]) -> bool:
+            check_row, check_col = pos[0] + 2 * direction[0], pos[1] + 2 * direction[1]
+            check_pos: tuple[int, int] = (check_row, check_col)
+            return (check_pos not in visited and 0 < check_row <
+                    self._height - 1 and 0 < check_col < self._width - 1)
+
+        visited: set[tuple[int, int]] = set()
+        stack: list[tuple[int, int]] = []
+        pos = (oddNumber(1, self._height - 1), oddNumber(1, self._width - 1))
+        stack.append(pos)
+        visited.add(pos)
+        while (len(stack) > 0):
+            pos = stack[-1]
+            print(visited)
+            directions: list[tuple] = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            valid_directions = [
+                direction for direction in directions
+                if valid_direction(direction, pos, visited)
+            ]
+            if (valid_directions):
+                direction = random.choice(valid_directions)
+                maze[pos[0] + direction[0]][pos[1] + direction[1]] = 0
+                new_pos = ((pos[0] + direction[0] * 2),
+                           (pos[1] + direction[1] * 2))
+                stack.append(new_pos)
+                visited.add(new_pos)
+            else:
+                stack.pop()
+        print(maze)
+
 
 def render_matrix(maze: list[list[int]]) -> None:
 
     chars = {
+        0: '\x1b[38;5;25m██\x1b[0m',
         1: '\x1b[38;5;16m██\x1b[0m',
         2: '\x1b[48;5;24m  \x1b[0m',
-        5: '\x1b[48;5;200m  \x1b[0m',
+        5: '\x1b[48;5;220m  \x1b[0m',
     }
     for row in maze:
         line = ""
@@ -89,7 +129,9 @@ def render_matrix(maze: list[list[int]]) -> None:
 
 if __name__ == "__main__":
 
-    maze = MazeGenerator(12, 15, (10, 2), (10, 2), "test", True)
+    maze = MazeGenerator(15, 15, (10, 2), (10, 2), "test", True)
     init = maze.init_maze()
-    maze.setup42(init)
+    if (maze._width > 10):
+        maze.setup42(init)
+    maze.generate(init)
     render_matrix(init)
