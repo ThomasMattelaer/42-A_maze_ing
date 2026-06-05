@@ -111,6 +111,19 @@ class MazeGenerator():
                 stack.pop()
         print(maze)
 
+    def solve(self, maze: list[list[int]]) -> str:
+        directions = [
+            ["N", (-1,0), (-2,0)],
+            ["S", (1,0), (2,0)],
+            ["E", (0,1), (0,2)],
+            ["W", (0,-1), (0,-2)],
+        ]
+        
+        entry_coord = self._entry
+        entry_maze = (entry_coord[0]*2+1, entry_coord[1]*2+1)
+        exit_coord = self._exit
+        exit_maze = (exit_coord[0]*2+1, exit_coord[1]*2+1)
+        for direction, wall, neighbor in directions:
 
 def render_matrix(maze: list[list[int]]) -> None:
 
