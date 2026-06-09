@@ -4,7 +4,7 @@ PYTHON = $(VENV)/bin/python3
 PIP = $(VENV)/bin/pip
 
 run: install
-	$(PYTHON) src/${NAME}
+	$(PYTHON) ${NAME}
 
 clean:
 	rm -rf .mypy_cache
@@ -16,7 +16,7 @@ install: requirements.txt
 	$(PIP) install -r requirements.txt
 
 debug: install
-	$(PYTHON) -m pdb src/${NAME}
+	$(PYTHON) -m pdb ${NAME}
 
 lint:
 	flake8 --exclude=./venv .
