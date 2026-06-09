@@ -12,8 +12,8 @@ def solve(entry: tuple[int, int], exit: tuple[int, int],
 
     entry_maze = entry
     exit_maze = exit
-    coord_entry = ((entry_maze[0] * 2)+1, (entry_maze[1] * 2) + 1)
-    coord_exit = ((exit_maze[0] * 2)+1, (exit_maze[1] * 2) + 1)
+    coord_entry = ((entry_maze[1] * 2)+1, (entry_maze[0] * 2) + 1)
+    coord_exit = ((exit_maze[1] * 2)+1, (exit_maze[0] * 2) + 1)
 
     deque_path = deque([coord_entry])
     came_from: dict[tuple[int, int],
