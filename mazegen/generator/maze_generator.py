@@ -10,7 +10,8 @@ class MazeGenerator():
                  entry: tuple[int, int],
                  exit: tuple[int, int],
                  output_file: str,
-                 perfect: bool
+                 perfect: bool,
+                 seed: int | None = None
                  ) -> None:
 
         self._height = height
@@ -19,6 +20,8 @@ class MazeGenerator():
         self._exit = exit
         self._output_file = output_file
         self._perfect = perfect
+        if seed is not None:
+            random.seed(seed)
 
     def init_maze(self) -> list[list[int]]:
         matrix: list[list[int]] = []
@@ -66,7 +69,7 @@ class MazeGenerator():
                      (maze[r][c-1] == 5 and maze[r][c+1] == 5):
                         maze[r][c] = 5
 
-    def generate(self, maze: list[list[int]]) -> None:
+    def generate_path(self, maze: list[list[int]]) -> None:
         """Generate all the path of the maze with the DFS algorithm"""
 
         def oddNumber(a: int, b: int) -> int:
@@ -111,7 +114,7 @@ class MazeGenerator():
                 stack.pop()
 
 
-def render_matrix(maze: list[list[int]]) -> None:
+def render_maze(maze: list[list[int]]) -> None:
 
     chars = {
         0: '\x1b[38;5;37m██\x1b[0m',  # cellule
@@ -126,3 +129,11 @@ def render_matrix(maze: list[list[int]]) -> None:
         for cell in row:
             line += chars[cell]
         print(line)
+
+
+def generate_maze(maze_class: MazeGenerator) -> list[list[int]]:
+    maze: list[list[int]] = maze_class.init_maze()
+    if (maze_class._width > 10):
+        maze_class.setup42(maze)
+    maze_class.generate_path(maze)
+    return maze
