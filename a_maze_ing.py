@@ -1,4 +1,5 @@
 from mazegen import MazeGenerator, solve, render_maze, generate_maze
+from mazegen import write_output
 
 
 def ask_user_action() -> None:
@@ -9,7 +10,9 @@ def ask_user_action() -> None:
 
 if __name__ == "__main__":
     print("A-MAZE-ING !")
-    maze_class = MazeGenerator(15, 15, (1, 3), (3, 5), "test", True, seed=81)
+    maze_class = MazeGenerator(15, 15, (1, 3), (13, 13), "test", True, seed=81)
     maze = generate_maze(maze_class)
+    path = solve((1, 3), (13, 13), maze)
     solve(maze_class._entry, maze_class._exit, maze)
+    write_output(maze, (1, 3), (13, 13), path)
     render_maze(maze)
