@@ -1,7 +1,11 @@
 import typing
 
 
-def parsing_config() -> None:
+class ConfigError(ValueError):
+    pass
+
+
+def parsing_config() -> dict[str, str]:
     config_dict: dict = {}
     f: typing.IO = open("./config.txt")
     content = f.read()
@@ -17,171 +21,101 @@ def parsing_config() -> None:
         parts = line.split("=")
 
         if len(parts) < 2:
-            print("No equal between values OR, ", end="")
-            print("no value before or after the equal")
-            print("Please check that there's one equal between", end="")
-            print(" your key and your value")
-            return
-
+            raise ConfigError(
+                "No equal between values OR no value "
+                + "before or after the equal.\n"
+                "Please check that there's one equal "
+                + "between your key and your value."
+            )
         elif len(parts) > 2:
-            print("Too many equals")
-            print("Please check that there's only one equal between", end="")
-            print(" your key and your value")
-            return
-
+            raise ConfigError(
+                "Too many equals.\n"
+                "Please check that there's only one equal between "
+                + "your key and your value."
+            )
         elif parts[0].endswith(" ") or parts[1].startswith(" "):
-            print("For each field, the expected format is :")
-            print("field_name=value")
-            print("Please check that there's no spaces before or ", end="")
-            print("after the equal sign.")
-
-            return
+            raise ConfigError(
+                "For each field, the expected format is : field_name=value\n"
+                "Please check that there's no spaces before"
+                + "or after the equal sign."
+            )
         else:
             config_dict.update({parts[0]: parts[1]})
 
-    required_keys = [
-        "WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT"
-        ]
+    required_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT",
+                     "OUTPUT_FILE", "PERFECT"]
 
     if not all(key in config_dict for key in required_keys):
-        print("All six mandatory keys are not present, please ", end="")
-        print("enter the following fields:")
-        print("WIDTH, HEIGHT, ENTRY, EXIT, OUTPUT_FILE, PERFECT")
-        return
+        raise ConfigError(
+            "All six mandatory keys are not present, please enter: "
+            "WIDTH, HEIGHT, ENTRY, EXIT, OUTPUT_FILE, PERFECT"
+        )
 
     for key in config_dict:
-
         if key == "WIDTH":
-            try:
-                int(config_dict[key])
-            except ValueError:
-                print("'WIDTH' field is expecting ", end="")
-                print(" a numeric value as follows :")
-                print("WIDTH=numeric_value")
-                return
+            int(config_dict[key])
 
         if key == "HEIGHT":
-            try:
-                int(config_dict[key])
-            except ValueError:
-                print("'HEIGHT' field is expecting ", end="")
-                print("a numeric value as follows :")
-                print("HEIGHT=numeric_value")
-                return
+            int(config_dict[key])
 
     for key in config_dict:
-
-        if key == "ENTRY":
+        if key in ("ENTRY", "EXIT"):
             parts = config_dict[key].split(",")
             if len(parts) < 2:
-                print("No ',' between values OR, ", end="")
-                print("no value before or after the ','")
-                print("Please check that there's one comma between", end="")
-                print(" your two numbers")
-
+                raise ConfigError(
+                    f"No ',' between values in '{key}'.\n"
+                    "Please check that there's one comma between "
+                    + "your two numbers."
+                )
             elif len(parts) > 2:
-                print("Too many commas")
-                print("Please check that there's only one ", end="")
-                print("comma between your two numbers")
-
+                raise ConfigError(
+                    f"Too many commas in '{key}'.\n"
+                    "Please check that there's one comma between "
+                    + "your two numbers."
+                )
             elif parts[0].endswith(" ") or parts[1].startswith(" "):
-                print("'ENTRY' field is expecting ", end="")
-                print("two values ", end="")
-                print("separated by a ',' without spaces as follows :")
-                print("ENTRY=numeric_value,numeric_value")
-            else:
-                try:
-                    parts = config_dict[key].split(",")
-                    x = int(parts[0])
-                    y = int(parts[1])
-                except ValueError:
-                    print("'ENTRY' field is expecting ", end="")
-                    print("two numeric values ", end="")
-                    print("outside of the ',' separator:")
-                    print("ENTRY=numeric_value,numeric_value")
-                if x < 0 or y < 0:
-                    print("Coordinates can't be negatives")
-                    print("Please check that the 'ENTRY'coordinates ", end="")
-                    print("are both positive numbers")
-                elif x >= int(config_dict["WIDTH"]):
-                    print("The entry point is outside the maze")
-                    print("Please check that the maze contains ", end="")
-                    print("exactly one entry point")
-                elif y >= int(config_dict["HEIGHT"]):
-                    print("The entry point is outside the maze")
-                    print("Please check that the maze contains ", end="")
-                    print("exactly one entry point")
-
-        if key == "EXIT":
-            parts = config_dict[key].split(",")
-            if len(parts) < 2:
-                print("No ',' between values OR, ", end="")
-                print("no value before or after the ','")
-                print("Please check that there's one comma between", end="")
-                print(" your two numbers")
-                return
-            elif len(parts) > 2:
-                print("Too many commas")
-                print("Please check that there's only one ", end="")
-                print("comma between your two numbers")
-                return
-            elif parts[0].endswith(" ") or parts[1].startswith(" "):
-                print("'EXIT' field is expecting ", end="")
-                print("two values ", end="")
-                print("separated by a ',' without spaces as follows :")
-                print("EXIT=numeric_value,numeric_value")
-            else:
-                try:
-                    parts = config_dict[key].split(",")
-                    x = int(parts[0])
-                    y = int(parts[1])
-                except ValueError:
-                    print("'EXIT' fiels is expecting ", end="")
-                    print("two numeric values ", end="")
-                    print("outside of the ',' separator:")
-                    print("EXIT=numeric_value,numeric_value")
-                if x < 0 or y < 0:
-                    print("Coordinates can't be negatives")
-                    print("Please check that the 'ENTRY'coordinates ", end="")
-                    print("are both positive numbers")
-                elif x >= int(config_dict["WIDTH"]):
-                    print("The exit point is outside the maze")
-                    print("Please check that the maze contains ", end="")
-                    print("exactly one exit point")
-                    return
-                elif y >= int(config_dict["HEIGHT"]):
-                    print("The exit point is outside the maze")
-                    print("Please check that the maze contains ", end="")
-                    print("exactly one exit point")
-                    return
+                raise ConfigError(
+                    f"'{key}' expects two values separated by "
+                    + "',' without spaces: "
+                    f"{key}=numeric_value,numeric_value"
+                )
+            x = int(parts[0])
+            y = int(parts[1])
+            if x < 0 or y < 0:
+                raise ConfigError(f"Coordinates in '{key}' can't be negative.")
+            if x >= int(config_dict["WIDTH"]):
+                raise ConfigError(f"The {key.lower()} point x={x} is outside "
+                                  + "the maze width.")
+            if y >= int(config_dict["HEIGHT"]):
+                raise ConfigError(f"The {key.lower()} point y={y} is outside "
+                                  + "the maze height.")
 
         if key == "OUTPUT_FILE":
             if not config_dict[key].endswith(".txt"):
-                print("'OUTPUT_FILE' field is expecting ", end="")
-                print("to end with '.txt' as follows :")
-                print("OUTPUT_FILE=file_name.txt")
+                raise ConfigError("'OUTPUT_FILE' must end with "
+                                  + "'.txt': OUTPUT_FILE=file_name.txt")
+            if len(config_dict[key]) == 4:
+                raise ConfigError("The file name can't just be '.txt' "
+                                  + ", add a name before.")
 
         if key == "PERFECT":
-            if (not config_dict[key] == "True"
-                    and not config_dict[key] == "False"):
-                print("'PERFECT' field is expecting ", end="")
-                print("'True' or 'False' as value as follows :")
-                print("PERFECT=True or PERFECT=False")
+            if config_dict[key] not in ("True", "False"):
+                raise ConfigError("'PERFECT' expects 'True' or 'False': "
+                                  + "PERFECT=True or PERFECT=False")
 
     if config_dict["ENTRY"] == config_dict["EXIT"]:
-        print("The 'ENTRY' and 'EXIT' points can't have", end="")
-        print(" the same coordinates !")
-        print("Please change the values in at least on field")
-        return
+        raise ConfigError("'ENTRY' and 'EXIT' can't have the same "
+                          + "coordinates.")
 
-    if len(config_dict["OUTPUT_FILE"]) == 4:
-        print("The file name can't just be '.txt'")
-        print("Please change the value with a correct file name")
-    return
+    return config_dict
 
 
 def main() -> dict[str, str]:
-    parsing_config()
+    try:
+        return parsing_config()
+    except (ConfigError, ValueError) as e:
+        print(f"Config error: {e}")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

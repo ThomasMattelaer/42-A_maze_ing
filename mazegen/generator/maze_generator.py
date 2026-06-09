@@ -126,4 +126,3 @@ def render_matrix(maze: list[list[int]]) -> None:
         for cell in row:
             line += chars[cell]
         print(line)
-

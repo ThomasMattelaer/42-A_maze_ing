@@ -10,4 +10,3 @@ if __name__ == "__main__":
     maze.generate(init)
     solve((1, 3), (3, 5), init)
     render_matrix(init)
-
