@@ -24,6 +24,12 @@ class MazeGenerator():
             random.seed(seed)
 
     def init_maze(self) -> list[list[int]]:
+        """Inititate a 2 dimensions matrix with one entry, one exit walls and
+        cells
+
+        Returns: a 2d matrix.
+        """
+
         matrix: list[list[int]] = []
         for row in range(self._height * 2 + 1):
             columns: list[int] = []
@@ -41,6 +47,10 @@ class MazeGenerator():
         return matrix
 
     def setup42(self, maze: list[list[int]]) -> None:
+        """place the '42' pattern at the center of the maze.
+
+        Args: maze is the matrix that we've initiliaze in the init function.
+        """
         height_42 = 5
         width_42 = 7
 
@@ -60,6 +70,7 @@ class MazeGenerator():
         self.fulfill42(maze)
 
     def fulfill42(self, maze: list[list[int]]) -> None:
+        """Adjust the color of the walls in between of the the 42 pattern"""
         rows = len(maze)
         cols = len(maze[0])
         for r in range(1, rows - 1):
@@ -115,6 +126,7 @@ class MazeGenerator():
 
 
 def render_maze(maze: list[list[int]]) -> None:
+    """"print the matrix """
 
     chars = {
         0: '\x1b[38;5;37m██\x1b[0m',  # cellule

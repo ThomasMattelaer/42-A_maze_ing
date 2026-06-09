@@ -6,7 +6,7 @@
 - [ ] Interaction (change color, remove path, rebuild the maze, change only 42)
 - [ ] Gerer le cas du labyrinthe parfait ou non
 - [ ] Visual aspect
-- [ ] Requirements dependencies
+- [X] Requirements dependencies
 - [ ] Errors handling
 - [ ] Check Makefile
 - [ ] recheck .tar file + venv dependencies
