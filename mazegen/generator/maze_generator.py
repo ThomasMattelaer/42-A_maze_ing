@@ -119,7 +119,7 @@ def render_matrix(maze: list[list[int]]) -> None:
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;214m██\x1b[0m',  # 42
-        6: '\x1b[48;5;37m\x1b[38;5;220m🞻 \x1b[0m',  # Path
+        6: '\x1b[48;5;37m\x1b[38;5;245m⋖⋗\x1b[0m',  # Path
     }
     for row in maze:
         line = ""
