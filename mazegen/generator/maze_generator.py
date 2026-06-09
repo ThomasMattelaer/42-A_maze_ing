@@ -83,8 +83,8 @@ class MazeGenerator():
                 pos[1] + 2 * direction[1]
             check_pos: tuple[int, int] = (check_row, check_col)
             return (check_pos not in visited and 0 < check_row <
-                    (self._height * 2) - 1
-                    and 0 < check_col < (self._width * 2) - 1
+                    (self._height * 2)
+                    and 0 < check_col < (self._width * 2)
                     and maze[check_row][check_col] != 5)
 
         visited: set[tuple[int, int]] = set()
@@ -114,12 +114,12 @@ class MazeGenerator():
 def render_matrix(maze: list[list[int]]) -> None:
 
     chars = {
-        0: '\x1b[48;5;37m██\x1b[0m',  # cellule
+        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
         1: '\x1b[38;5;24m██\x1b[0m',  # mur
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;214m██\x1b[0m',  # 42
-        6: '\x1b[38;5;202m░░\x1b[0m',  # Path
+        6: '\x1b[48;5;37m\x1b[38;5;220m🞻 \x1b[0m',  # Path
     }
     for row in maze:
         line = ""
