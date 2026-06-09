@@ -84,6 +84,7 @@ class MazeGenerator():
         """Generate all the path of the maze with the DFS algorithm"""
 
         def oddNumber(a: int, b: int) -> int:
+            """function to only have odd number"""
             number = random.randint(a, b)
             while (number % 2 == 0):
                 number = random.randint(a, b)
@@ -92,6 +93,8 @@ class MazeGenerator():
         def valid_direction(direction: tuple, pos: tuple,
                             visited: set[tuple[int, int]],
                             maze: list[list[int]]) -> bool:
+            """valid direction that are possible from a certain
+            position in the matrix"""
 
             check_row, check_col = pos[0] + 2 * direction[0], \
                 pos[1] + 2 * direction[1]
@@ -122,6 +125,7 @@ class MazeGenerator():
                 stack.append(new_pos)
                 visited.add(new_pos)
             else:
+                # generer une dose de chance si le maze n'est pas parfait
                 stack.pop()
 
 
@@ -145,7 +149,7 @@ def render_maze(maze: list[list[int]]) -> None:
 
 def generate_maze(maze_class: MazeGenerator) -> list[list[int]]:
     """a function to help to gather all the utils to generate the maze"""
-    
+
     maze: list[list[int]] = maze_class.init_maze()
     if (maze_class._width > 10):
         maze_class.setup42(maze)

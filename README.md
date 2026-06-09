@@ -11,5 +11,5 @@
 - [ ] Errors handling
 - [ ] Check Makefile
 - [ ] recheck .tar file + venv dependencies
-- [ ] Writing docstrings and check mypy + Flake8
+- [X] Writing docstrings and check mypy + Flake8
 - [ ] Bonus - moving in the maze
