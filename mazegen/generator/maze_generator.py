@@ -126,7 +126,7 @@ class MazeGenerator():
 
 
 def render_maze(maze: list[list[int]]) -> None:
-    """"print the matrix """
+    """"print the matrix"""
 
     chars = {
         0: '\x1b[38;5;37m██\x1b[0m',  # cellule
@@ -144,6 +144,8 @@ def render_maze(maze: list[list[int]]) -> None:
 
 
 def generate_maze(maze_class: MazeGenerator) -> list[list[int]]:
+    """a function to help to gather all the utils to generate the maze"""
+    
     maze: list[list[int]] = maze_class.init_maze()
     if (maze_class._width > 10):
         maze_class.setup42(maze)

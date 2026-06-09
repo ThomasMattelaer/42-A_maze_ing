@@ -4,4 +4,5 @@ from .generator.maze_generator import (MazeGenerator,
 from .generator.solver import solve
 from .generator.writer import write_output
 
-__all__ = ["solve", "MazeGenerator", "render_maze", "generate_maze"]
+__all__ = ["solve", "MazeGenerator", "render_maze", "generate_maze",
+           "write_output"]

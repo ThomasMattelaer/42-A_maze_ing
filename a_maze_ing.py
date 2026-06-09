@@ -10,7 +10,8 @@ def ask_user_action() -> None:
 
 if __name__ == "__main__":
     print("A-MAZE-ING !")
-    maze_class = MazeGenerator(15, 15, (1, 3), (13, 13), "test", True, seed=81)
+    # config dict
+    maze_class = MazeGenerator(15, 15, (1, 3), (13, 13), "test", False)
     maze = generate_maze(maze_class)
     path = solve((1, 3), (13, 13), maze)
     solve(maze_class._entry, maze_class._exit, maze)

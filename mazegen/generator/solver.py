@@ -3,6 +3,7 @@ from collections import deque
 
 def solve(entry: tuple[int, int], exit: tuple[int, int],
           maze: list[list[int]]) -> str:
+    """finding the best path thanks to the BSF algorithm"""
     directions = [
         ("N", (-1, 0), (-2, 0)),
         ("E", (0, 1), (0, 2)),
