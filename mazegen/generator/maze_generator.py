@@ -114,7 +114,7 @@ class MazeGenerator():
 def render_matrix(maze: list[list[int]]) -> None:
 
     chars = {
-        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
+        0: '\x1b[48;5;37m██\x1b[0m',  # cellule
         1: '\x1b[38;5;24m██\x1b[0m',  # mur
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
