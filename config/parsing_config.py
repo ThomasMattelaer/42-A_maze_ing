@@ -36,8 +36,8 @@ def parsing_config() -> dict[str, str]:
         elif parts[0].endswith(" ") or parts[1].startswith(" "):
             raise ConfigError(
                 "For each field, the expected format is : field_name=value\n"
-                "Please check that there's no spaces before"
-                + "or after the equal sign."
+                "Please check that there's no spaces before" +
+                "or after the equal sign."
             )
         else:
             config_dict.update({parts[0]: parts[1]})
@@ -47,7 +47,7 @@ def parsing_config() -> dict[str, str]:
 
     if not all(key in config_dict for key in required_keys):
         raise ConfigError(
-            "All six mandatory keys are not present, please enter: "
+            "All six mandatory keys are not present, please enter: " +
             "WIDTH, HEIGHT, ENTRY, EXIT, OUTPUT_FILE, PERFECT"
         )
 
@@ -64,19 +64,19 @@ def parsing_config() -> dict[str, str]:
             if len(parts) < 2:
                 raise ConfigError(
                     f"No ',' between values in '{key}'.\n"
-                    "Please check that there's one comma between "
-                    + "your two numbers."
+                    "Please check that there's one comma between " +
+                    "your two numbers."
                 )
             elif len(parts) > 2:
                 raise ConfigError(
                     f"Too many commas in '{key}'.\n"
-                    "Please check that there's one comma between "
-                    + "your two numbers."
+                    "Please check that there's one comma between " +
+                    "your two numbers."
                 )
             elif parts[0].endswith(" ") or parts[1].startswith(" "):
                 raise ConfigError(
-                    f"'{key}' expects two values separated by "
-                    + "',' without spaces: "
+                    f"'{key}' expects two values separated by " +
+                    "',' without spaces: "
                     f"{key}=numeric_value,numeric_value"
                 )
             x = int(parts[0])
@@ -84,24 +84,24 @@ def parsing_config() -> dict[str, str]:
             if x < 0 or y < 0:
                 raise ConfigError(f"Coordinates in '{key}' can't be negative.")
             if x >= int(config_dict["WIDTH"]):
-                raise ConfigError(f"The {key.lower()} point x={x} is outside "
-                                  + "the maze width.")
+                raise ConfigError(f"The {key.lower()} point x={x} is " +
+                                  "outside the maze width.")
             if y >= int(config_dict["HEIGHT"]):
-                raise ConfigError(f"The {key.lower()} point y={y} is outside "
-                                  + "the maze height.")
+                raise ConfigError(f"The {key.lower()} point y={y} is " +
+                                  "outside the maze height.")
 
         if key == "OUTPUT_FILE":
             if not config_dict[key].endswith(".txt"):
-                raise ConfigError("'OUTPUT_FILE' must end with "
-                                  + "'.txt': OUTPUT_FILE=file_name.txt")
+                raise ConfigError("'OUTPUT_FILE' must end with " +
+                                  "'.txt': OUTPUT_FILE=file_name.txt")
             if len(config_dict[key]) == 4:
-                raise ConfigError("The file name can't just be '.txt' "
-                                  + ", add a name before.")
+                raise ConfigError("The file name can't just be '.txt' " +
+                                  ", add a name before.")
 
         if key == "PERFECT":
             if config_dict[key] not in ("True", "False"):
-                raise ConfigError("'PERFECT' expects 'True' or 'False': "
-                                  + "PERFECT=True or PERFECT=False")
+                raise ConfigError("'PERFECT' expects 'True' or 'False': " +
+                                  "PERFECT=True or PERFECT=False")
 
     if config_dict["ENTRY"] == config_dict["EXIT"]:
         raise ConfigError("'ENTRY' and 'EXIT' can't have the same "
