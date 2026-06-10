@@ -1,6 +1,4 @@
 import random
-from config import clear
-import time
 
 
 class MazeGenerator():
@@ -41,8 +39,8 @@ class MazeGenerator():
                 else:
                     columns.append(0)
             matrix.append(columns)
-        entry_row, entry_col = (self._entry[0] * 2) + 1, \
-            (self._entry[1] * 2) + 1
+        entry_row, entry_col = (self._entry[1] * 2) + 1, \
+            (self._entry[0] * 2) + 1
         exit_row, exit_col = (self._exit[1] * 2) + 1, (self._exit[0] * 2) + 1
         matrix[entry_row][entry_col] = 3
         matrix[exit_row][exit_col] = 4
@@ -70,7 +68,6 @@ class MazeGenerator():
             c = (start_col + col) * 2 + 1
             maze[r][c] = 5
         self.fulfill42(maze)
-        render_maze(maze)
 
     def fulfill42(self, maze: list[list[int]]) -> None:
         """Adjust the color of the walls in between of the the 42 pattern"""
@@ -137,21 +134,62 @@ class MazeGenerator():
                             and maze[row][col] != 5):
                         maze[row][col] = 0
                 stack.pop()
-            clear()
-            render_maze(maze)
-            time.sleep(0.03)
+
+
+COLORS = [
+    {   #set0
+        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;24m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;214m██\x1b[0m',  # 42
+        6: '\x1b[48;5;37m\x1b[38;5;245m██\x1b[0m',  # Path
+    },
+    {   #set1
+        0: '\x1b[38;5;175m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;161m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;10m██\x1b[0m',  # 42
+        6: '\x1b[48;5;16m\x1b[38;5;11m██\x1b[0m',  # Path
+    },
+    {   #set2
+        0: '\x1b[38;5;135m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;90m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;29m██\x1b[0m',  # 42
+        6: '\x1b[48;5;37m\x1b[38;5;95m██\x1b[0m',  # Path
+    },
+    {   #set3
+        0: '\x1b[38;5;244m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;232m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;1m██\x1b[0m',  # 42
+        6: '\x1b[48;5;37m\x1b[38;5;3m██\x1b[0m',  # Path
+    },
+    {   #set4
+        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;24m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;214m██\x1b[0m',  # 42
+        6: '\x1b[48;5;37m\x1b[38;5;245m██\x1b[0m',  # Path
+    },
+]
 
 
 def render_maze(maze: list[list[int]]) -> None:
     """"print the matrix"""
 
     chars = {
-        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;24m██\x1b[0m',  # mur
+        0: '\x1b[38;5;84m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;34m██\x1b[0m',  # mur
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;214m██\x1b[0m',  # 42
-        6: '\x1b[38;5;245m██\x1b[0m',  # Path
+        5: '\x1b[38;5;226m██\x1b[0m',  # 42
+        6: '\x1b[48;5;1m\x1b[38;5;224m██\x1b[0m',  # Path
     }
     for row in maze:
         line = ""
