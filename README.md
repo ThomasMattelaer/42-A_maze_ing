@@ -5,7 +5,7 @@
 - [X] Transform matrix to hexadecimal format
 - [X] Requirements dependencies
 - [ ] Interaction (change color, remove path, rebuild the maze, change only 42)
-- [ ] Gerer le cas du labyrinthe parfait ou non
+- [X] Gerer le cas du labyrinthe parfait ou non
 - [ ] Passer les elements du parseur au main (pour generer le maze)
 - [ ] Visual aspect
 - [ ] Errors handling
