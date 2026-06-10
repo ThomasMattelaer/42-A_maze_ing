@@ -9,7 +9,6 @@ def generate(maze_class: MazeGenerator) -> list[list[int]]:
     path = solve(maze_class._entry, maze_class._exit, maze)
     solve(maze_class._entry, maze_class._exit, maze)
     write_output(maze, maze_class._entry, maze_class._exit, path)
-    render_maze(maze)
     return maze
 
 

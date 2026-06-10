@@ -1,4 +1,5 @@
 import random
+from config import clear
 import time
 
 
@@ -69,6 +70,7 @@ class MazeGenerator():
             c = (start_col + col) * 2 + 1
             maze[r][c] = 5
         self.fulfill42(maze)
+        render_maze(maze)
 
     def fulfill42(self, maze: list[list[int]]) -> None:
         """Adjust the color of the walls in between of the the 42 pattern"""
@@ -135,6 +137,9 @@ class MazeGenerator():
                             and maze[row][col] != 5):
                         maze[row][col] = 0
                 stack.pop()
+            clear()
+            render_maze(maze)
+            time.sleep(0.03)
 
 
 def render_maze(maze: list[list[int]]) -> None:
