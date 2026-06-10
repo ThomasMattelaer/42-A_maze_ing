@@ -10,6 +10,7 @@
 - [ ] Visual aspect
 - [ ] Errors handling
 - [ ] Check Makefile
+- [ ] Hide/Show path
 - [ ] recheck .tar file + venv dependencies
 - [X] Writing docstrings and check mypy + Flake8
 - [X] Bonus - moving in the maze
