@@ -1,6 +1,7 @@
+import sys
 from mazegen import MazeGenerator, solve, render_maze, generate_maze
 from mazegen import write_output
-from config import clear, parsing_config, get_key
+from config import clear, parsing_main, get_key
 
 
 def generate(maze_class: MazeGenerator) -> list[list[int]]:
@@ -31,7 +32,16 @@ def handle_input(maze_class: MazeGenerator, maze: list[list[int]]) -> bool:
 
 if __name__ == "__main__":
     print("A-MAZE-ING !")
-    # config dict
+    if len(sys.argv) != 2:
+        print("Usage: python3 a_maze_ing.py config.txt")
+        raise SystemExit(1)
+    config_file = sys.argv[1]
+    config = parsing_main(config_file)
+    width = int(config["WIDTH"])
+    height = int(config["HEIGHT"])
+    entry = int(config["ENTRY"])
+    exit = int(config["EXIT"])
+    perfect  = int(config["PERFECT"])
     maze_class = MazeGenerator(15, 15, (1, 3), (13, 13), "test", False)
     clear()
     maze = generate(maze_class)

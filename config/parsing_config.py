@@ -5,11 +5,10 @@ class ConfigError(ValueError):
     pass
 
 
-def parsing_config() -> dict[str, str]:
+def parsing_config(filename: str) -> dict[str, str]:
     config_dict: dict = {}
-    f: typing.IO = open("./config.txt")
-    content = f.read()
-    f.close()
+    with open(filename) as f:
+        content = f.read()
     print(f"{content}\n")
     lines = content.splitlines()
 
@@ -110,13 +109,9 @@ def parsing_config() -> dict[str, str]:
     return config_dict
 
 
-def main() -> dict[str, str]:
+def parsing_main(filename: str) -> dict[str, str]:
     try:
-        return parsing_config()
-    except (ConfigError, ValueError) as e:
+        return parsing_config(filename)
+    except (ConfigError, ValueError, FileNotFoundError, OSError) as e:
         print(f"Config error: {e}")
         raise SystemExit(1)
-
-
-if __name__ == "__main__":
-    main()
