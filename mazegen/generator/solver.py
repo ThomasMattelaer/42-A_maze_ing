@@ -1,4 +1,7 @@
 from collections import deque
+from config import clear
+from .maze_generator import render_maze
+import time
 
 
 def solve(entry: tuple[int, int], exit: tuple[int, int],
@@ -48,6 +51,9 @@ def solve(entry: tuple[int, int], exit: tuple[int, int],
         curr_row, curr_col = current[0], current[1]
         if (current != coord_entry and current != coord_exit):
             maze[curr_row][curr_col] = 6
+        clear()
+        render_maze(maze)
+        time.sleep(0.02)
         current = previous
     path.reverse()
     return "".join(path)

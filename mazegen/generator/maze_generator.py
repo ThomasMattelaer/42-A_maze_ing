@@ -182,14 +182,15 @@ COLORS = [
 
 def render_maze(maze: list[list[int]]) -> None:
     """"print the matrix"""
-    # chars = {
-        # 0: '\x1b[38;5;84m██\x1b[0m',  # cellule
-        # 1: '\x1b[38;5;34m██\x1b[0m',  # mur
-        # 3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        # 4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        # 5: '\x1b[38;5;226m██\x1b[0m',  # 42
-        # 6: '\x1b[48;5;1m\x1b[38;5;224m██\x1b[0m',  # Path
-    # }
+
+    chars = {
+        0: '\x1b[38;5;84m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;34m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;226m██\x1b[0m',  # 42
+        6: '\x1b[48;5;1m\x1b[38;5;224m██\x1b[0m',  # Path
+    }
     for row in maze:
         line = ""
         for cell in row:

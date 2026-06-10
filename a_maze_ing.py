@@ -9,8 +9,19 @@ def generate(maze_class: MazeGenerator) -> list[list[int]]:
     path = solve(maze_class._entry, maze_class._exit, maze)
     solve(maze_class._entry, maze_class._exit, maze)
     write_output(maze, maze_class._entry, maze_class._exit, path)
-    render_maze(maze)
     return maze
+
+
+def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
+    """Double the tuple to fit the 2d matrix
+
+       Args: a tuple of int
+
+       Returns: a tuple of int
+    """
+    row, col = tuple
+    new_row, new_col = (row * 2) + 1, (col * 2) + 1
+    return new_row, new_col
 
 
 def handle_input(maze_class: MazeGenerator, maze: list[list[int]],
@@ -21,24 +32,25 @@ def handle_input(maze_class: MazeGenerator, maze: list[list[int]],
     if (key == "1"):
         clear()
         maze = generate(maze_class)
+        entry = extend_tuple(maze_class._entry)
     elif (key == "3"):
         clear()
         render_maze(maze)
     elif (key == "a"):
         clear()
-        entry = move_entry(maze, entry, (-1, 0))
+        entry = move_entry(maze, entry, (0, -1))
         render_maze(maze)
     elif (key == "d"):
         clear()
-        entry = move_entry(maze, entry, (1, 0))
+        entry = move_entry(maze, entry, (0, 1))
         render_maze(maze)
     elif (key == "w"):
         clear()
-        entry = move_entry(maze, entry, (0, -1))
+        entry = move_entry(maze, entry, (-1, 0))
         render_maze(maze)
     elif (key == "s"):
         clear()
-        entry = move_entry(maze, entry, (0, 1))
+        entry = move_entry(maze, entry, (1, 0))
         render_maze(maze)
     elif (key == "4"):
         return False, maze, entry
@@ -69,6 +81,6 @@ if __name__ == "__main__":
     clear()
     maze = generate(maze_class)
     handle = True
-    pos = ((1 * 2) + 1, (3 * 2) + 1)
+    pos = extend_tuple(entry)
     while (handle):
         handle, maze, pos = handle_input(maze_class, maze, pos)
