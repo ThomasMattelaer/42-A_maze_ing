@@ -1,33 +1,50 @@
 import sys
 from mazegen import MazeGenerator, solve, render_maze, generate_maze
 from mazegen import write_output
-from config import clear, parsing_main, get_key
+from config import clear, get_key, parsing_main, move_entry
 
 
 def generate(maze_class: MazeGenerator) -> list[list[int]]:
     maze = generate_maze(maze_class)
-    path = solve((1, 3), (13, 13), maze)
+    path = solve(maze_class._entry, maze_class._exit, maze)
     solve(maze_class._entry, maze_class._exit, maze)
-    write_output(maze, (1, 3), (13, 13), path)
+    write_output(maze, maze_class._entry, maze_class._exit, path)
     render_maze(maze)
     return maze
 
 
-def handle_input(maze_class: MazeGenerator, maze: list[list[int]]) -> bool:
+def handle_input(maze_class: MazeGenerator, maze: list[list[int]],
+                 entry: tuple) -> tuple[bool,
+                                        list[list[int]],
+                                        tuple[int, int]]:
     key = get_key()
     if (key == "1"):
         clear()
-        generate(maze_class)
+        maze = generate(maze_class)
     elif (key == "3"):
         clear()
         render_maze(maze)
     elif (key == "a"):
-        
+        clear()
+        entry = move_entry(maze, entry, (-1, 0))
+        render_maze(maze)
+    elif (key == "d"):
+        clear()
+        entry = move_entry(maze, entry, (1, 0))
+        render_maze(maze)
+    elif (key == "w"):
+        clear()
+        entry = move_entry(maze, entry, (0, -1))
+        render_maze(maze)
+    elif (key == "s"):
+        clear()
+        entry = move_entry(maze, entry, (0, 1))
+        render_maze(maze)
     elif (key == "4"):
-        return False
+        return False, maze, entry
     else:
-        return True
-    return True
+        return True, maze, entry
+    return True, maze, entry
 
 
 if __name__ == "__main__":
@@ -37,14 +54,21 @@ if __name__ == "__main__":
         raise SystemExit(1)
     config_file = sys.argv[1]
     config = parsing_main(config_file)
+    output_file = config["OUTPUT_FILE"]
     width = int(config["WIDTH"])
     height = int(config["HEIGHT"])
-    entry = int(config["ENTRY"])
-    exit = int(config["EXIT"])
-    perfect  = int(config["PERFECT"])
-    maze_class = MazeGenerator(15, 15, (1, 3), (13, 13), "test", False)
+    entry_x = int(config["ENTRY"].split(",")[0])
+    entry_y = int(config["ENTRY"].split(",")[1])
+    entry = (entry_x, entry_y)
+    exit_x = int(config["EXIT"].split(",")[0])
+    exit_y = int(config["EXIT"].split(",")[1])
+    exit = (exit_x, exit_y)
+    perfect = config["PERFECT"] == "True"
+    maze_class = MazeGenerator(height, width, entry, exit, output_file,
+                               perfect)
     clear()
     maze = generate(maze_class)
     handle = True
+    pos = ((1 * 2) + 1, (3 * 2) + 1)
     while (handle):
-        handle = handle_input(maze_class, maze)
+        handle, maze, pos = handle_input(maze_class, maze, pos)

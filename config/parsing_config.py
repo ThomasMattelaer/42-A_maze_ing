@@ -1,6 +1,3 @@
-import typing
-
-
 class ConfigError(ValueError):
     pass
 
@@ -96,7 +93,6 @@ def parsing_config(filename: str) -> dict[str, str]:
             if len(config_dict[key]) == 4:
                 raise ConfigError("The file name can't just be '.txt' " +
                                   ", add a name before.")
-
         if key == "PERFECT":
             if config_dict[key] not in ("True", "False"):
                 raise ConfigError("'PERFECT' expects 'True' or 'False': " +

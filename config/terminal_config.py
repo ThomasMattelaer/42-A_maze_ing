@@ -30,13 +30,15 @@ def clear() -> None:
     # print("\033[2J")
 
 
-def move_entry(maze: list[list[int]], entry: tuple, direction: tuple) -> None:
+def move_entry(maze: list[list[int]], entry: tuple,
+               direction: tuple) -> tuple[int, int]:
     """Move cursor to the position requested"""
-    entry_row, entry_col = entry[0], entry[1]
-    maze[entry_row][entry_col] = 0
-    maze[entry_row + direction[0]][entry_col + direction[1]] = 4
-
-
-if __name__ == "__main__":
-    while (1):
-        get_key()
+    col, row = entry
+    new_row, new_col = row + direction[1], col + direction[0]
+    if (maze[new_row][new_col] == 0 or maze[new_row][new_col] == 6):
+        maze[row][col] = maze[new_row][new_col]
+        maze[new_row][new_col] = 3
+        new_pos = new_col, new_row
+    else:
+        new_pos = col, row
+    return (new_pos)
