@@ -2,9 +2,10 @@ NAME = a_maze_ing.py
 VENV = venv
 PYTHON = $(VENV)/bin/python3
 PIP = $(VENV)/bin/pip
+FILE = config.txt
 
 run: install
-	$(PYTHON) ${NAME}
+	$(PYTHON) ${NAME} ${FILE}
 
 clean:
 	rm -rf .mypy_cache
