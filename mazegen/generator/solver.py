@@ -5,7 +5,7 @@ import time
 
 
 def solve(entry: tuple[int, int], exit: tuple[int, int],
-          maze: list[list[int]]) -> str:
+          maze: list[list[int]], color_index: int = 0) -> str:
     """finding the best path thanks to the BSF algorithm"""
     directions = [
         ("N", (-1, 0), (-2, 0)),
@@ -52,7 +52,7 @@ def solve(entry: tuple[int, int], exit: tuple[int, int],
         if (current != coord_entry and current != coord_exit):
             maze[curr_row][curr_col] = 6
         clear()
-        render_maze(maze)
+        render_maze(maze, color_index)
         time.sleep(0.02)
         current = previous
     path.reverse()
