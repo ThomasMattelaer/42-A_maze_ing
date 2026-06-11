@@ -40,7 +40,6 @@ def handle_input(
     elif (key == "2"):
         clear()
         path = not path
-        print(path)
         render_maze(maze, path, color_index)
     elif (key == "3"):
         new_index = random.randint(0, len(COLORS) - 1)
@@ -86,7 +85,6 @@ def handle_input(
 
 
 if __name__ == "__main__":
-    print("A-MAZE-ING !")
     if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
         raise SystemExit(1)

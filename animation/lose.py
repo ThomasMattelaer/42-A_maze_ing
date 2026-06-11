@@ -15,7 +15,7 @@ LOSER_FRAMES = [
   ---o---o---
     /     \
 
-  gg ez, try harder next time
+  try harder next time
     """,
     r"""
   ___________
@@ -30,7 +30,7 @@ LOSER_FRAMES = [
   ---o---o---
     /     \
 
-  gg ez, try harder next time
+  try harder next time
     """,
 ]
 
@@ -42,4 +42,4 @@ def loser():
             print(frame)
             time.sleep(0.2)
     os.system('clear')
-    print("\n\t💀  L O S E R  💀\n\tpress [1] to cry and retry\n")
+

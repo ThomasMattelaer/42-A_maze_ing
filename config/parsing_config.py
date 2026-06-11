@@ -9,7 +9,6 @@ def parsing_config(filename: str) -> dict[str, str]:
     config_dict: dict = {}
     with open(filename) as f:
         content = f.read()
-    print(f"{content}\n")
     lines = content.splitlines()
 
     for line in lines:
