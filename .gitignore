@@ -5,3 +5,5 @@ __pycache__/
 dist/
 src/mazegen.egg-info/
 output_maze.txt
+config.txt
+

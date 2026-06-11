@@ -1,3 +1,6 @@
+from typing import Any
+
+
 class ConfigError(ValueError):
     pass
 
@@ -105,9 +108,30 @@ def parsing_config(filename: str) -> dict[str, str]:
     return config_dict
 
 
-def parsing_main(filename: str) -> dict[str, str]:
+def parsing_output(filename: str) -> dict[str, Any]:
+    config = parsing_config(filename)
+    entry_row = int(config["ENTRY"].split(",")[0])
+    entry_col = int(config["ENTRY"].split(",")[1])
+    entry = (entry_row, entry_col)
+    exit_row = int(config["EXIT"].split(",")[0])
+    exit_col = int(config["EXIT"].split(",")[1])
+    exit = (exit_row, exit_col)
+    perfect = config["PERFECT"] == "True"
+    config_dict = {
+        "output_file": config["OUTPUT_FILE"],
+        "width": int(config["WIDTH"]),
+        "height": int(config["HEIGHT"]),
+        "entry": entry,
+        "exit": exit,
+        "perfect": perfect
+    }
+
+    return config_dict
+
+
+def parsing_main(filename: str) -> dict[str, Any]:
     try:
-        return parsing_config(filename)
+        return parsing_output(filename)
     except (ConfigError, ValueError, FileNotFoundError, OSError) as e:
         print(f"Config error: {e}")
         raise SystemExit(1)

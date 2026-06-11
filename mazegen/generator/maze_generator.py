@@ -144,114 +144,6 @@ class MazeGenerator():
             time.sleep(0.01)
 
 
-COLORS = [
-    {
-        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;24m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;220m██\x1b[0m',  # 42
-        6: '\x1b[38;5;245m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;175m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;161m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;10m██\x1b[0m',  # 42
-        6: '\x1b[38;5;11m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;135m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;90m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;29m██\x1b[0m',  # 42
-        6: '\x1b[38;5;95m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;244m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;232m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;1m██\x1b[0m',  # 42
-        6: '\x1b[38;5;3m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;208m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;94m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;45m██\x1b[0m',  # 42
-        6: '\x1b[38;5;230m██\x1b[0m',  # Path
-    },
-]
-COLORS_PATH = [
-    {
-        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;24m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;220m██\x1b[0m',  # 42
-        6: '\x1b[38;5;37m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;175m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;161m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;10m██\x1b[0m',  # 42
-        6: '\x1b[38;5;175m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;135m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;90m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;29m██\x1b[0m',  # 42
-        6: '\x1b[38;5;135m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;244m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;232m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;1m██\x1b[0m',  # 42
-        6: '\x1b[38;5;244m██\x1b[0m',  # Path
-    },
-    {
-        0: '\x1b[38;5;208m██\x1b[0m',  # cellule
-        1: '\x1b[38;5;94m██\x1b[0m',  # mur
-        3: '\x1b[38;5;165m██\x1b[0m',  # entry
-        4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;45m██\x1b[0m',  # 42
-        6: '\x1b[38;5;208m██\x1b[0m',  # Path
-    },
-]
-
-
-def render_maze(maze: list[list[int]], path: bool,
-                color_index: int = 0) -> None:
-    """"print the matrix"""
-    print({path})
-    if path:
-        chars = COLORS[color_index]
-    else:
-        chars = COLORS_PATH[color_index]
-
-    print(chars)
-    for row in maze:
-        line = ""
-        for cell in row:
-            line += chars[cell]
-        print(f"{line}")
-    print("""1. Re-generate the maze
-2. Hide/Show the ideal path
-3. Change the color of the maze
-4. Leave the game
-          """)
-
-
 def generate_maze(maze_class: MazeGenerator,
                   path: bool = True, color_index: int = 0) -> list[list[int]]:
     """a function to help to gather all the utils to generate the maze"""
@@ -261,3 +153,55 @@ def generate_maze(maze_class: MazeGenerator,
         maze_class.setup42(maze)
     maze_class.generate_path(maze, path, color_index)
     return maze
+
+
+COLORS = [
+    # [cellule, mur, entry, exit, 42, path]
+    [37,  24,  165, 196, 220, 245],
+    [175, 161, 165, 196, 10,  11],
+    [135, 90,  165, 196, 29,  95],
+    [244, 232, 165, 196, 1,   3],
+    [208, 94,  165, 196, 45,  230],
+]
+
+
+def make_block(color: int) -> str:
+    return f"\x1b[38;5;{color}m██\x1b[0m"
+
+
+def mapping_color(path: bool, color_index: int) -> dict[int, str]:
+
+    color = COLORS[color_index]
+    mapping = {
+        0: make_block(color[0]),
+        1: make_block(color[1]),
+        3: make_block(color[2]),
+        4: make_block(color[3]),
+        5: make_block(color[4]),
+    }
+
+    if (path):
+        mapping[6] = make_block(color[5])
+    else:
+        mapping[6] = make_block(color[0])
+
+    return mapping
+
+
+def render_maze(maze: list[list[int]], path: bool,
+                color_index: int = 0) -> None:
+    """"print the matrix"""
+
+    chars = mapping_color(path, color_index)
+    for row in maze:
+        line = ""
+        for cell in row:
+            line += chars[cell]
+        print(f"{line}")
+    print("\n1. Re-generate the maze")
+    print("2. Hide/Show the ideal path")
+    print("3. Change the color of the maze")
+    print("4. Leave the game\n")
+
+
+

@@ -28,7 +28,7 @@ def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
 
 def handle_input(
         maze_class: MazeGenerator, maze: list[list[int]],
-        entry: tuple[int, int], color_index: int, path: bool, 
+        entry: tuple[int, int], color_index: int, path: bool,
         exit: tuple[int, int]
         ) -> tuple[bool, list[list[int]], tuple[int, int], int, bool]:
     key = get_key()
@@ -77,25 +77,20 @@ if __name__ == "__main__":
         print("Usage: python3 a_maze_ing.py config.txt")
         raise SystemExit(1)
     config_file = sys.argv[1]
+    print(config_file)
     config = parsing_main(config_file)
-    output_file = config["OUTPUT_FILE"]
-    width = int(config["WIDTH"])
-    height = int(config["HEIGHT"])
-    entry_x = int(config["ENTRY"].split(",")[0])
-    entry_y = int(config["ENTRY"].split(",")[1])
-    entry = (entry_x, entry_y)
-    exit_x = int(config["EXIT"].split(",")[0])
-    exit_y = int(config["EXIT"].split(",")[1])
-    exit = (exit_x, exit_y)
-    perfect = config["PERFECT"] == "True"
-    maze_class = MazeGenerator(height, width, entry, exit, output_file,
-                               perfect)
+    maze_class = MazeGenerator(config["height"],
+                               config["width"],
+                               config["entry"],
+                               config["exit"],
+                               config["output_file"],
+                               config["perfect"]
+                               )
     clear()
     maze = generate(maze_class, True)
-    color_index = 0
-    handle = True
-    pos = extend_tuple(entry)
-    path = True
+    color_index, handle, pos, path = 0, True, extend_tuple(config["entry"]), \
+        True
     while (handle):
-        handle, maze, pos, color_index, \
-            path = handle_input(maze_class, maze, pos, color_index, path, exit)
+        handle, maze, pos, color_index, path = handle_input(
+            maze_class, maze, pos, color_index, path,  config["exit"]
+            )
