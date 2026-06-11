@@ -6,7 +6,7 @@ class ConfigError(ValueError):
 
 
 def parsing_config(filename: str) -> dict[str, str]:
-    config_dict: dict = {}
+    config_dict: dict[str, str] = {}
     with open(filename) as f:
         content = f.read()
     lines = content.splitlines()
