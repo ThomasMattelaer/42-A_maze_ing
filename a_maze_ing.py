@@ -106,6 +106,22 @@ if __name__ == "__main__":
         handle = True
         while (handle):
             handle = handle_input(ctx)
-            
-    except (KeyboardInterrupt) as e:
-        print(e)
+
+    except FileNotFoundError as e:
+        print(f"ERROR: {e}")
+    except IndexError as e:
+        print(f"ERROR: {e}")
+    except PermissionError as e:
+        print(f"ERROR: {e}")
+    except IsADirectoryError as e:
+        print(f"ERROR: {e}")
+    except UnicodeError as e:
+        print(f"ERROR: {e}")
+    except KeyError as e:
+        print(f"ERROR: {e}")
+    except ValueError as e:
+        print(f"ERROR: {e}")
+    except OSError as e:
+        print(f"ERROR: {e}")
+    except KeyboardInterrupt as e:
+        print(f"ERROR: {e}")

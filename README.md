@@ -9,8 +9,8 @@
 - [X] Passer les elements du parseur au main (pour generer le maze)
 - [X] Visual aspect
 - [X] Hide/Show path
-- [ ] Errors handling
-- [ ] Check Makefile
+- [X] Errors handling
+- [X] Check Makefile
 - [ ] recheck .tar file + venv dependencies
 - [ ] Generate the 2 README
 - [ ] Writing docstrings and check mypy + Flake8
@@ -18,5 +18,4 @@
 - [ ] entry outside of the maze
 - [ ] nom du fichier genere en lien avec le config.txt
 - [ ] gerer erreur de la nouvelle key dans config.txt
-- [ ] chmod 000 mazegen, gerer les permissions
 
