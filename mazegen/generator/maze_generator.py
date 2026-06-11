@@ -95,7 +95,7 @@ class MazeGenerator():
                 number = random.randint(a, b)
             return number
 
-        def valid_direction(direction: tuple, pos: tuple,
+        def valid_direction(direction: tuple[int, int], pos: tuple[int, int],
                             visited: set[tuple[int, int]],
                             maze: list[list[int]]) -> bool:
             """valid direction that are possible from a certain
@@ -117,7 +117,9 @@ class MazeGenerator():
         visited.add(pos)
         while (len(stack) > 0):
             pos = stack[-1]
-            directions: list[tuple] = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            directions: list[tuple[int, int]] = [
+                (0, 1), (0, -1), (1, 0), (-1, 0)
+                ]
             valid_directions = [
                 direction for direction in directions
                 if valid_direction(direction, pos, visited, maze)
@@ -202,6 +204,3 @@ def render_maze(maze: list[list[int]], path: bool,
     print("2. Hide/Show the ideal path")
     print("3. Change the color of the maze")
     print("4. Leave the game\n")
-
-
-

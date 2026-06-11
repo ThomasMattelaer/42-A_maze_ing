@@ -25,7 +25,7 @@ FIREWORKS_FRAMES = [
 ]
 
 
-def celebrate():
+def celebrate() -> None:
     for _ in range(10):
         for frame in FIREWORKS_FRAMES:
             os.system('clear')
