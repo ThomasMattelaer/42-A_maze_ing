@@ -6,6 +6,25 @@ from config import clear, get_key, parsing_main, move_entry
 from animation import celebrate, loser
 
 
+class GameContext():
+
+    def __init__(self,
+                 maze_class: MazeGenerator,
+                 maze: list[list[int]],
+                 entry: tuple[int, int],
+                 exit: tuple[int, int],
+                 color_index: int,
+                 path: bool) -> None:
+
+        self.maze_class = maze_class
+        self.maze = maze
+        self.initial_entry = entry
+        self.entry = entry
+        self.exit = exit
+        self.color_index = color_index
+        self.path = path
+
+
 def generate(maze_class: MazeGenerator, path: bool = True,
              color_index: int = 0) -> list[list[int]]:
     maze = generate_maze(maze_class, path, color_index)
@@ -25,25 +44,6 @@ def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
     row, col = tuple
     new_row, new_col = (row * 2) + 1, (col * 2) + 1
     return new_row, new_col
-
-
-class GameContext():
-
-    def __init__(self,
-                 maze_class: MazeGenerator,
-                 maze: list[list[int]],
-                 entry: tuple[int, int],
-                 exit: tuple[int, int],
-                 color_index: int,
-                 path: bool) -> None:
-
-        self.maze_class = maze_class
-        self.maze = maze
-        self.initial_entry = entry
-        self.entry = entry
-        self.exit = exit
-        self.color_index = color_index
-        self.path = path
 
 
 def handle_input(ctx: GameContext) -> bool:
@@ -80,27 +80,32 @@ def handle_input(ctx: GameContext) -> bool:
 
 
 if __name__ == "__main__":
+
     if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
         raise SystemExit(1)
-    config_file = sys.argv[1]
-    config = parsing_main(config_file)
-    maze_class = MazeGenerator(config["height"],
-                               config["width"],
-                               config["entry"],
-                               config["exit"],
-                               config["output_file"],
-                               config["perfect"]
-                               )
-    clear()
-    maze = generate(maze_class, True)
-    ctx = GameContext(maze_class,
-                      maze,
-                      extend_tuple(config["entry"]),
-                      extend_tuple(config["exit"]),
-                      0,
-                      True
-                      )
-    handle = True
-    while (handle):
-        handle = handle_input(ctx)
+    try:
+        config_file = sys.argv[1]
+        config = parsing_main(config_file)
+        maze_class = MazeGenerator(config["height"],
+                                   config["width"],
+                                   config["entry"],
+                                   config["exit"],
+                                   config["output_file"],
+                                   config["perfect"]
+                                   )
+        clear()
+        maze = generate(maze_class, True)
+        ctx = GameContext(maze_class,
+                          maze,
+                          extend_tuple(config["entry"]),
+                          extend_tuple(config["exit"]),
+                          0,
+                          True
+                          )
+        handle = True
+        while (handle):
+            handle = handle_input(ctx)
+            
+    except (KeyboardInterrupt) as e:
+        print(e)
