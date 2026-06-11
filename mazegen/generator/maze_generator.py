@@ -25,7 +25,7 @@ class MazeGenerator():
         if seed is not None:
             random.seed(seed)
 
-    def init_maze(self) -> list[list[int]]:
+    def init_maze(self, color_index: int = 0) -> list[list[int]]:
         """Inititate a 2 dimensions matrix with one entry, one exit walls and
         cells
 
@@ -47,7 +47,7 @@ class MazeGenerator():
         matrix[entry_row][entry_col] = 3
         matrix[exit_row][exit_col] = 4
         clear()
-        render_maze(matrix, True)
+        render_maze(matrix, True, color_index)
         return matrix
 
     def setup42(self, maze: list[list[int]]) -> None:
@@ -84,7 +84,8 @@ class MazeGenerator():
                      (maze[r][c-1] == 5 and maze[r][c+1] == 5):
                         maze[r][c] = 5
 
-    def generate_path(self, maze: list[list[int]], path: bool = True) -> None:
+    def generate_path(self, maze: list[list[int]], path: bool = True,
+                      color_index: int = 0) -> None:
         """Generate all the path of the maze with the DFS algorithm"""
 
         def oddNumber(a: int, b: int) -> int:
@@ -139,7 +140,7 @@ class MazeGenerator():
                         maze[row][col] = 0
                 stack.pop()
             clear()
-            render_maze(maze, path)
+            render_maze(maze, path, color_index)
             time.sleep(0.01)
 
 
@@ -252,11 +253,11 @@ def render_maze(maze: list[list[int]], path: bool,
 
 
 def generate_maze(maze_class: MazeGenerator,
-                  path: bool = True) -> list[list[int]]:
+                  path: bool = True, color_index: int = 0) -> list[list[int]]:
     """a function to help to gather all the utils to generate the maze"""
 
-    maze: list[list[int]] = maze_class.init_maze()
+    maze: list[list[int]] = maze_class.init_maze(color_index)
     if (maze_class._width > 10):
         maze_class.setup42(maze)
-    maze_class.generate_path(maze, path)
+    maze_class.generate_path(maze, path, color_index)
     return maze

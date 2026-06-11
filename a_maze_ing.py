@@ -7,7 +7,7 @@ from config import clear, get_key, parsing_main, move_entry
 
 def generate(maze_class: MazeGenerator, path: bool = True,
              color_index: int = 0) -> list[list[int]]:
-    maze = generate_maze(maze_class, path)
+    maze = generate_maze(maze_class, path, color_index)
     path_solver = solve(maze_class._entry, maze_class._exit, maze,
                         path, color_index)
     write_output(maze, maze_class._entry, maze_class._exit, path_solver)
@@ -28,7 +28,8 @@ def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
 
 def handle_input(
         maze_class: MazeGenerator, maze: list[list[int]],
-        entry: tuple, color_index: int, path: bool
+        entry: tuple[int, int], color_index: int, path: bool, 
+        exit: tuple[int, int]
         ) -> tuple[bool, list[list[int]], tuple[int, int], int, bool]:
     key = get_key()
     if (key == "1"):
@@ -97,4 +98,4 @@ if __name__ == "__main__":
     path = True
     while (handle):
         handle, maze, pos, color_index, \
-            path = handle_input(maze_class, maze, pos, color_index, path)
+            path = handle_input(maze_class, maze, pos, color_index, path, exit)
