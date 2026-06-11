@@ -35,7 +35,7 @@ def move_entry(maze: list[list[int]], entry: tuple,
     """Move cursor to the position requested"""
     row, col = entry
     new_row, new_col = row + direction[0], col + direction[1]
-    if (maze[new_row][new_col] == 0 or maze[new_row][new_col] == 6):
+    if (maze[new_row][new_col] in (0, 4, 6)):
         maze[row][col] = maze[new_row][new_col]
         maze[new_row][new_col] = 3
         new_pos = new_row, new_col

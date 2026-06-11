@@ -3,6 +3,7 @@ import random
 from mazegen import MazeGenerator, solve, render_maze, generate_maze, COLORS
 from mazegen import write_output
 from config import clear, get_key, parsing_main, move_entry
+from animation import celebrate, loser
 
 
 def generate(maze_class: MazeGenerator, path: bool = True,
@@ -52,19 +53,32 @@ def handle_input(
         clear()
         entry = move_entry(maze, entry, (0, -1))
         render_maze(maze, path, color_index)
+        if entry == exit:
+            celebrate()
+            return False, maze, entry, color_index, path
     elif (key == "d"):
         clear()
         entry = move_entry(maze, entry, (0, 1))
         render_maze(maze, path, color_index)
+        if entry == exit:
+            celebrate()
+            return False, maze, entry, color_index, path
     elif (key == "w"):
         clear()
         entry = move_entry(maze, entry, (-1, 0))
         render_maze(maze, path, color_index)
+        if entry == exit:
+            celebrate()
+            return False, maze, entry, color_index, path
     elif (key == "s"):
         clear()
         entry = move_entry(maze, entry, (1, 0))
         render_maze(maze, path, color_index)
+        if entry == exit:
+            celebrate()
+            return False, maze, entry, color_index, path
     elif (key == "4"):
+        loser()
         return False, maze, entry, color_index, path
     else:
         return True, maze, entry, color_index, path
@@ -88,8 +102,8 @@ if __name__ == "__main__":
                                )
     clear()
     maze = generate(maze_class, True)
-    color_index, handle, pos, path = 0, True, extend_tuple(config["entry"]), \
-        True
+    color_index, handle, pos, exit, path = 0, True, \
+        extend_tuple(config["entry"]), extend_tuple(config["exit"]), True
     while (handle):
         handle, maze, pos, color_index, path = handle_input(
             maze_class, maze, pos, color_index, path,  config["exit"]
