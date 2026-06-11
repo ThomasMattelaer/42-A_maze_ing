@@ -27,61 +27,56 @@ def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
     return new_row, new_col
 
 
-def handle_input(
-        maze_class: MazeGenerator, maze: list[list[int]],
-        entry: tuple[int, int], color_index: int, path: bool,
-        exit: tuple[int, int]
-        ) -> tuple[bool, list[list[int]], tuple[int, int], int, bool]:
+class GameContext():
+
+    def __init__(self,
+                 maze_class: MazeGenerator,
+                 maze: list[list[int]],
+                 entry: tuple[int, int],
+                 exit: tuple[int, int],
+                 color_index: int,
+                 path: bool) -> None:
+
+        self.maze_class = maze_class
+        self.maze = maze
+        self.initial_entry = entry
+        self.entry = entry
+        self.exit = exit
+        self.color_index = color_index
+        self.path = path
+
+
+def handle_input(ctx: GameContext) -> bool:
     key = get_key()
+
+    MOVES = {"a": (0, -1), "d": (0, 1), "s": (1, 0), "w": (-1, 0)}
+    should_refresh = True
+
     if (key == "1"):
-        clear()
-        maze = generate(maze_class, path, color_index)
-        entry = extend_tuple(maze_class._entry)
+        ctx.maze = generate(ctx.maze_class, ctx.path, ctx.color_index)
+        ctx.entry = ctx.initial_entry
     elif (key == "2"):
-        clear()
-        path = not path
-        render_maze(maze, path, color_index)
+        ctx.path = not ctx.path
     elif (key == "3"):
-        new_index = random.randint(0, len(COLORS) - 1)
-        while new_index == color_index:
+        new_index = ctx.color_index
+        while new_index == ctx.color_index:
             new_index = random.randint(0, len(COLORS) - 1)
-        color_index = new_index
-        clear()
-        render_maze(maze, path, color_index)
-    elif (key == "a"):
-        clear()
-        entry = move_entry(maze, entry, (0, -1))
-        render_maze(maze, path, color_index)
-        if entry == exit:
+        ctx.color_index = new_index
+    elif (key in MOVES):
+        ctx.entry = move_entry(ctx.maze, ctx.entry, MOVES[key])
+        if ctx.entry == ctx.exit:
             celebrate()
-            return False, maze, entry, color_index, path
-    elif (key == "d"):
-        clear()
-        entry = move_entry(maze, entry, (0, 1))
-        render_maze(maze, path, color_index)
-        if entry == exit:
-            celebrate()
-            return False, maze, entry, color_index, path
-    elif (key == "w"):
-        clear()
-        entry = move_entry(maze, entry, (-1, 0))
-        render_maze(maze, path, color_index)
-        if entry == exit:
-            celebrate()
-            return False, maze, entry, color_index, path
-    elif (key == "s"):
-        clear()
-        entry = move_entry(maze, entry, (1, 0))
-        render_maze(maze, path, color_index)
-        if entry == exit:
-            celebrate()
-            return False, maze, entry, color_index, path
+            return False
     elif (key == "4"):
         loser()
-        return False, maze, entry, color_index, path
+        return False
     else:
-        return True, maze, entry, color_index, path
-    return True, maze, entry, color_index, path
+        should_refresh = False
+
+    if (should_refresh):
+        clear()
+        render_maze(ctx.maze, ctx.path, ctx.color_index)
+    return True
 
 
 if __name__ == "__main__":
@@ -89,7 +84,6 @@ if __name__ == "__main__":
         print("Usage: python3 a_maze_ing.py config.txt")
         raise SystemExit(1)
     config_file = sys.argv[1]
-    print(config_file)
     config = parsing_main(config_file)
     maze_class = MazeGenerator(config["height"],
                                config["width"],
@@ -100,9 +94,13 @@ if __name__ == "__main__":
                                )
     clear()
     maze = generate(maze_class, True)
-    color_index, handle, pos, exit, path = 0, True, \
-        extend_tuple(config["entry"]), extend_tuple(config["exit"]), True
+    ctx = GameContext(maze_class,
+                      maze,
+                      extend_tuple(config["entry"]),
+                      extend_tuple(config["exit"]),
+                      0,
+                      True
+                      )
+    handle = True
     while (handle):
-        handle, maze, pos, color_index, path = handle_input(
-            maze_class, maze, pos, color_index, path, exit
-            )
+        handle = handle_input(ctx)

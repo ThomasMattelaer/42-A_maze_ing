@@ -1,7 +1,7 @@
 import termios
 import tty
 import sys
-import os
+# import os
 
 
 def get_key() -> str:
@@ -26,12 +26,13 @@ def get_key() -> str:
 
 def clear() -> None:
     """"function to clear the terminal"""
-    os.system("clear")
-    # print("\033[2J")
+    print("\033[2J")
+    print("\x1b[H")
+    # os.system("clear")
 
 
-def move_entry(maze: list[list[int]], entry: tuple,
-               direction: tuple) -> tuple[int, int]:
+def move_entry(maze: list[list[int]], entry: tuple[int, int],
+               direction: tuple[int, int]) -> tuple[int, int]:
     """Move cursor to the position requested"""
     row, col = entry
     new_row, new_col = row + direction[0], col + direction[1]
