@@ -15,7 +15,7 @@
 - [ ] Generate the 2 README
 - [ ] Writing docstrings and check mypy + Flake8
 - [X] Bonus - moving in the maze
-- [ ] entry outside of the maze
+- [X] entry outside of the maze
 - [ ] nom du fichier genere en lien avec le config.txt
 - [ ] gerer erreur de la nouvelle key dans config.txt
 

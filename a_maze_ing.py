@@ -1,4 +1,5 @@
 import sys
+import os
 import random
 from mazegen import MazeGenerator, solve, render_maze, generate_maze, COLORS
 from mazegen import write_output
@@ -30,7 +31,8 @@ def generate(maze_class: MazeGenerator, path: bool = True,
     maze = generate_maze(maze_class, path, color_index)
     path_solver = solve(maze_class._entry, maze_class._exit, maze,
                         path, color_index)
-    write_output(maze, maze_class._entry, maze_class._exit, path_solver)
+    write_output(maze, maze_class._entry, maze_class._exit, path_solver,
+                 maze_class._output_file)
     return maze
 
 
@@ -87,11 +89,12 @@ if __name__ == "__main__":
     try:
         config_file = sys.argv[1]
         config = parsing_main(config_file)
+        output_file = "output_" + os.path.basename(config_file)
         maze_class = MazeGenerator(config["height"],
                                    config["width"],
                                    config["entry"],
                                    config["exit"],
-                                   config["output_file"],
+                                   output_file,
                                    config["perfect"]
                                    )
         clear()

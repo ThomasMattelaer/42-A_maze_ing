@@ -28,7 +28,7 @@ def convert_maze(maze: list[list[int]]) -> list[str]:
 
 def write_output(maze: list[list[int]], entry: tuple[int, int],
                  exit: tuple[int, int], path: str,
-                 filename: str = "output_maze.txt") -> None:
+                 filename: str) -> None:
     """write in a file the output of the final result of the maze
 
     args: maze: 2d matrix, entry, exit; tuple coord of entry/exit, path:str"""
