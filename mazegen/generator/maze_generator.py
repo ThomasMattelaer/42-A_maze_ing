@@ -1,4 +1,6 @@
 import random
+import time
+from config import clear
 
 
 class MazeGenerator():
@@ -44,6 +46,8 @@ class MazeGenerator():
         exit_row, exit_col = (self._exit[1] * 2) + 1, (self._exit[0] * 2) + 1
         matrix[entry_row][entry_col] = 3
         matrix[exit_row][exit_col] = 4
+        clear()
+        render_maze(matrix)
         return matrix
 
     def setup42(self, maze: list[list[int]]) -> None:
@@ -134,6 +138,9 @@ class MazeGenerator():
                             and maze[row][col] != 5):
                         maze[row][col] = 0
                 stack.pop()
+            clear()
+            render_maze(maze)
+            time.sleep(0.01)
 
 
 COLORS = [
@@ -142,7 +149,7 @@ COLORS = [
         1: '\x1b[38;5;24m██\x1b[0m',  # mur
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
-        5: '\x1b[38;5;66m██\x1b[0m',  # 42
+        5: '\x1b[38;5;220m██\x1b[0m',  # 42
         6: '\x1b[48;5;37m\x1b[38;5;245m██\x1b[0m',  # Path
     },
     {
