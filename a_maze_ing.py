@@ -106,5 +106,5 @@ if __name__ == "__main__":
         extend_tuple(config["entry"]), extend_tuple(config["exit"]), True
     while (handle):
         handle, maze, pos, color_index, path = handle_input(
-            maze_class, maze, pos, color_index, path,  config["exit"]
+            maze_class, maze, pos, color_index, path, exit
             )
