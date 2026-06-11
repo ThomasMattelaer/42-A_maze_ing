@@ -8,7 +8,8 @@ from config import clear, get_key, parsing_main, move_entry
 def generate(maze_class: MazeGenerator, path: bool = True,
              color_index: int = 0) -> list[list[int]]:
     maze = generate_maze(maze_class, path)
-    path_solver = solve(maze_class._entry, maze_class._exit, maze)
+    path_solver = solve(maze_class._entry, maze_class._exit, maze,
+                        path, color_index)
     write_output(maze, maze_class._entry, maze_class._exit, path_solver)
     return maze
 

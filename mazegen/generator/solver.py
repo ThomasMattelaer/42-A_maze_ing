@@ -5,7 +5,8 @@ import time
 
 
 def solve(entry: tuple[int, int], exit: tuple[int, int],
-          maze: list[list[int]], color_index: int = 0) -> str:
+          maze: list[list[int]],
+          path: bool = True, color_index: int = 0) -> str:
     """finding the best path thanks to the BSF algorithm"""
     directions = [
         ("N", (-1, 0), (-2, 0)),
@@ -34,26 +35,26 @@ def solve(entry: tuple[int, int], exit: tuple[int, int],
                     and neighbor_coord not in came_from):
                 came_from[neighbor_coord] = current
                 deque_path.append(neighbor_coord)
-    path = []
+    path_solver = []
     current = coord_exit
     while current != coord_entry:
         potential_previous = came_from[current]
         if isinstance(potential_previous, tuple):
             previous: tuple[int, int] = potential_previous
         if current[0] < previous[0]:
-            path.append("N")
+            path_solver.append("N")
         elif current[0] > previous[0]:
-            path.append("S")
+            path_solver.append("S")
         elif current[1] > previous[1]:
-            path.append("E")
+            path_solver.append("E")
         else:
-            path.append("W")
+            path_solver.append("W")
         curr_row, curr_col = current[0], current[1]
         if (current != coord_entry and current != coord_exit):
             maze[curr_row][curr_col] = 6
         clear()
-        render_maze(maze, color_index)
+        render_maze(maze, path, color_index)
         time.sleep(0.02)
         current = previous
-    path.reverse()
-    return "".join(path)
+    path_solver.reverse()
+    return "".join(path_solver)
