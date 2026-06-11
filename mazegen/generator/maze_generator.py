@@ -47,7 +47,7 @@ class MazeGenerator():
         matrix[entry_row][entry_col] = 3
         matrix[exit_row][exit_col] = 4
         clear()
-        render_maze(matrix)
+        render_maze(matrix, True)
         return matrix
 
     def setup42(self, maze: list[list[int]]) -> None:
@@ -84,7 +84,7 @@ class MazeGenerator():
                      (maze[r][c-1] == 5 and maze[r][c+1] == 5):
                         maze[r][c] = 5
 
-    def generate_path(self, maze: list[list[int]]) -> None:
+    def generate_path(self, maze: list[list[int]], path: bool = True) -> None:
         """Generate all the path of the maze with the DFS algorithm"""
 
         def oddNumber(a: int, b: int) -> int:
@@ -139,7 +139,7 @@ class MazeGenerator():
                         maze[row][col] = 0
                 stack.pop()
             clear()
-            render_maze(maze)
+            render_maze(maze, path)
             time.sleep(0.01)
 
 
@@ -150,7 +150,7 @@ COLORS = [
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;220m██\x1b[0m',  # 42
-        6: '\x1b[48;5;37m\x1b[38;5;245m██\x1b[0m',  # Path
+        6: '\x1b[38;5;245m██\x1b[0m',  # Path
     },
     {
         0: '\x1b[38;5;175m██\x1b[0m',  # cellule
@@ -158,7 +158,7 @@ COLORS = [
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;10m██\x1b[0m',  # 42
-        6: '\x1b[48;5;16m\x1b[38;5;11m██\x1b[0m',  # Path
+        6: '\x1b[38;5;11m██\x1b[0m',  # Path
     },
     {
         0: '\x1b[38;5;135m██\x1b[0m',  # cellule
@@ -166,7 +166,7 @@ COLORS = [
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;29m██\x1b[0m',  # 42
-        6: '\x1b[48;5;37m\x1b[38;5;95m██\x1b[0m',  # Path
+        6: '\x1b[38;5;95m██\x1b[0m',  # Path
     },
     {
         0: '\x1b[38;5;244m██\x1b[0m',  # cellule
@@ -174,7 +174,7 @@ COLORS = [
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;1m██\x1b[0m',  # 42
-        6: '\x1b[48;5;37m\x1b[38;5;3m██\x1b[0m',  # Path
+        6: '\x1b[38;5;3m██\x1b[0m',  # Path
     },
     {
         0: '\x1b[38;5;208m██\x1b[0m',  # cellule
@@ -182,15 +182,63 @@ COLORS = [
         3: '\x1b[38;5;165m██\x1b[0m',  # entry
         4: '\x1b[38;5;196m██\x1b[0m',  # exit
         5: '\x1b[38;5;45m██\x1b[0m',  # 42
-        6: '\x1b[48;5;94m\x1b[38;5;230m██\x1b[0m',  # Path
+        6: '\x1b[38;5;230m██\x1b[0m',  # Path
+    },
+]
+COLORS_PATH = [
+    {
+        0: '\x1b[38;5;37m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;24m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;220m██\x1b[0m',  # 42
+        6: '\x1b[38;5;37m██\x1b[0m',  # Path
+    },
+    {
+        0: '\x1b[38;5;175m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;161m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;10m██\x1b[0m',  # 42
+        6: '\x1b[38;5;175m██\x1b[0m',  # Path
+    },
+    {
+        0: '\x1b[38;5;135m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;90m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;29m██\x1b[0m',  # 42
+        6: '\x1b[38;5;135m██\x1b[0m',  # Path
+    },
+    {
+        0: '\x1b[38;5;244m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;232m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;1m██\x1b[0m',  # 42
+        6: '\x1b[38;5;244m██\x1b[0m',  # Path
+    },
+    {
+        0: '\x1b[38;5;208m██\x1b[0m',  # cellule
+        1: '\x1b[38;5;94m██\x1b[0m',  # mur
+        3: '\x1b[38;5;165m██\x1b[0m',  # entry
+        4: '\x1b[38;5;196m██\x1b[0m',  # exit
+        5: '\x1b[38;5;45m██\x1b[0m',  # 42
+        6: '\x1b[38;5;208m██\x1b[0m',  # Path
     },
 ]
 
 
-def render_maze(maze: list[list[int]], color_index: int = 0) -> None:
+def render_maze(maze: list[list[int]], path: bool,
+                color_index: int = 0) -> None:
     """"print the matrix"""
+    print({path})
+    if path:
+        chars = COLORS[color_index]
+    else:
+        chars = COLORS_PATH[color_index]
 
-    chars = COLORS[color_index]
+    print(chars)
     for row in maze:
         line = ""
         for cell in row:
@@ -203,11 +251,12 @@ def render_maze(maze: list[list[int]], color_index: int = 0) -> None:
           """)
 
 
-def generate_maze(maze_class: MazeGenerator) -> list[list[int]]:
+def generate_maze(maze_class: MazeGenerator,
+                  path: bool = True) -> list[list[int]]:
     """a function to help to gather all the utils to generate the maze"""
 
     maze: list[list[int]] = maze_class.init_maze()
     if (maze_class._width > 10):
         maze_class.setup42(maze)
-    maze_class.generate_path(maze)
+    maze_class.generate_path(maze, path)
     return maze

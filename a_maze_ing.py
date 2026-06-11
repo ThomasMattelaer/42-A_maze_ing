@@ -5,11 +5,11 @@ from mazegen import write_output
 from config import clear, get_key, parsing_main, move_entry
 
 
-def generate(maze_class: MazeGenerator,
+def generate(maze_class: MazeGenerator, path: bool = True,
              color_index: int = 0) -> list[list[int]]:
-    maze = generate_maze(maze_class)
-    path = solve(maze_class._entry, maze_class._exit, maze)
-    write_output(maze, maze_class._entry, maze_class._exit, path)
+    maze = generate_maze(maze_class, path)
+    path_solver = solve(maze_class._entry, maze_class._exit, maze)
+    write_output(maze, maze_class._entry, maze_class._exit, path_solver)
     return maze
 
 
@@ -27,41 +27,46 @@ def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
 
 def handle_input(
         maze_class: MazeGenerator, maze: list[list[int]],
-        entry: tuple, color_index: int
-        ) -> tuple[bool, list[list[int]], tuple[int, int], int]:
+        entry: tuple, color_index: int, path: bool
+        ) -> tuple[bool, list[list[int]], tuple[int, int], int, bool]:
     key = get_key()
     if (key == "1"):
         clear()
-        maze = generate(maze_class, color_index)
+        maze = generate(maze_class, path, color_index)
         entry = extend_tuple(maze_class._entry)
+    elif (key == "2"):
+        clear()
+        path = not path
+        print(path)
+        render_maze(maze, path, color_index)
     elif (key == "3"):
         new_index = random.randint(0, len(COLORS) - 1)
         while new_index == color_index:
             new_index = random.randint(0, len(COLORS) - 1)
         color_index = new_index
         clear()
-        render_maze(maze, color_index)
+        render_maze(maze, path, color_index)
     elif (key == "a"):
         clear()
         entry = move_entry(maze, entry, (0, -1))
-        render_maze(maze, color_index)
+        render_maze(maze, path, color_index)
     elif (key == "d"):
         clear()
         entry = move_entry(maze, entry, (0, 1))
-        render_maze(maze, color_index)
+        render_maze(maze, path, color_index)
     elif (key == "w"):
         clear()
         entry = move_entry(maze, entry, (-1, 0))
-        render_maze(maze, color_index)
+        render_maze(maze, path, color_index)
     elif (key == "s"):
         clear()
         entry = move_entry(maze, entry, (1, 0))
-        render_maze(maze, color_index)
+        render_maze(maze, path, color_index)
     elif (key == "4"):
-        return False, maze, entry, color_index
+        return False, maze, entry, color_index, path
     else:
-        return True, maze, entry, color_index
-    return True, maze, entry, color_index
+        return True, maze, entry, color_index, path
+    return True, maze, entry, color_index, path
 
 
 if __name__ == "__main__":
@@ -84,10 +89,11 @@ if __name__ == "__main__":
     maze_class = MazeGenerator(height, width, entry, exit, output_file,
                                perfect)
     clear()
-    maze = generate(maze_class)
+    maze = generate(maze_class, True)
     color_index = 0
     handle = True
     pos = extend_tuple(entry)
+    path = True
     while (handle):
-        handle, maze, pos, color_index = handle_input(maze_class, maze, pos,
-                                                      color_index)
+        handle, maze, pos, color_index, \
+            path = handle_input(maze_class, maze, pos, color_index, path)
