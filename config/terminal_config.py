@@ -26,9 +26,8 @@ def get_key() -> str:
 
 def clear() -> None:
     """"function to clear the terminal"""
-    print("\033[2J")
-    print("\x1b[H")
-    # os.system("clear")
+    print("\x1b[2J\x1b[3J\x1b[H", end="")
+    # os.system("clear")1
 
 
 def move_entry(maze: list[list[int]], entry: tuple[int, int],
