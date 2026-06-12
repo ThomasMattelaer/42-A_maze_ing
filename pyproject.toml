@@ -12,7 +12,8 @@ authors = [
 description = "A package to generate a maze"
 readme = "mazegen/README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["flake8",
+    "mypy"]
 
 [tool.setuptools.packages.find]
 include = ["mazegen*"]

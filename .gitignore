@@ -3,7 +3,7 @@ venv/
 __pycache__/
 *.pyc
 dist/
-src/mazegen.egg-info/
+mazegen.egg-info/
 output_maze.txt
 config.txt
 

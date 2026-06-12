@@ -1,2 +1,3 @@
 flake8; python_version >= "3.10.12"
 mypy; python_version >= "3.10.12"
+build; python_version >= "3.10.12"
