@@ -163,7 +163,7 @@ def generate_maze(maze_class: MazeGenerator,
     """a function to help to gather all the utils to generate the maze"""
 
     maze: list[list[int]] = maze_class.init_maze(color_index)
-    if (maze_class._width > 10):
+    if (maze_class._width > 10 and maze_class._height > 10):
         maze_class.setup42(maze)
     maze_class.generate_path(maze, path, color_index)
     return maze
