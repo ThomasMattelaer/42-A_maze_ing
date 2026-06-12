@@ -24,12 +24,6 @@ def get_key() -> str:
     return key
 
 
-def clear() -> None:
-    """"function to clear the terminal"""
-    print("\x1b[2J\x1b[3J\x1b[H", end="")
-    # os.system("clear")1
-
-
 def move_entry(maze: list[list[int]], entry: tuple[int, int],
                direction: tuple[int, int]) -> tuple[int, int]:
     """Move cursor to the position requested

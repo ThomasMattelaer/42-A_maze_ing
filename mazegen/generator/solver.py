@@ -1,6 +1,5 @@
 from collections import deque
-from config import clear
-from .maze_generator import render_maze
+from .maze_generator import render_maze, clear
 import time
 
 

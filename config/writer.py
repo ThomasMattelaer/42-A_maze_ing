@@ -38,9 +38,9 @@ def write_output(maze: list[list[int]], entry: tuple[int, int],
             f.write(line+"\n")
         f.write("\n")
 
-        f.write(f"{entry[0],entry[1]}")
+        f.write(f"{entry[0]},{entry[1]}")
         f.write("\n")
 
-        f.write(f"{exit[0],exit[1]}")
+        f.write(f"{exit[0]},{exit[1]}")
         f.write("\n")
         f.write(path+"\n")

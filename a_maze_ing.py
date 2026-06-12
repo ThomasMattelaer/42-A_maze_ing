@@ -1,8 +1,8 @@
 import sys
 import random
-from mazegen import MazeGenerator, solve, render_maze, generate_maze, COLORS
-from mazegen import write_output
-from config import clear, get_key, parsing_main, move_entry
+from mazegen import (MazeGenerator, solve, render_maze, generate_maze, COLORS,
+                     clear)
+from config import get_key, parsing_main, move_entry, write_output
 from animation import celebrate, loser
 
 

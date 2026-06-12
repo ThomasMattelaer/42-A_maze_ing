@@ -133,9 +133,15 @@ no isolated cell, exactly one path between any two cells).
 - **`PERFECT=False`:** while backtracking, with a 15% probability we open an
   extra wall ("braiding"), creating loops — so multiple paths can exist.
 - **The "42" pattern:** centered cells are marked as fully closed before
-  carving, and the DFS is forbidden from carving into them, so the "42" stays
-  visible. If the maze is too small to host the pattern, an error message is
-  printed and the pattern is skipped.
+  carving, and the DFS is forbidden from carving into them (including its random
+  starting cell), so the "42" stays fully closed in **perfect** mazes. If the
+  maze is too small to host the pattern, an error message is printed and the
+  pattern is skipped.
+  - **Design choice (non-perfect mazes):** when `PERFECT=False`, the braiding
+    step may open a wall adjacent to the "42", partially breaching it. This is an
+    accepted trade-off: non-perfect mazes deliberately allow extra openings, so
+    we let the braiding act uniformly rather than special-casing the pattern.
+    Use `PERFECT=True` if you need the "42" guaranteed fully closed.
 
 The **shortest path** is computed separately with a **Breadth-First Search
 (BFS)**, which guarantees the minimal number of steps between entry and exit.

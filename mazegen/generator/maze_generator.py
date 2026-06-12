@@ -1,6 +1,5 @@
 import random
 import time
-from config import clear
 
 
 class MazeGenerator():
@@ -117,6 +116,9 @@ class MazeGenerator():
         stack: list[tuple[int, int]] = []
         pos = (oddNumber(1, (self._height * 2) - 1),
                oddNumber(1, (self._width * 2) - 1))
+        while maze[pos[0]][pos[1]] == 5:
+            pos = (oddNumber(1, (self._height * 2) - 1),
+                   oddNumber(1, (self._width * 2) - 1))
         stack.append(pos)
         visited.add(pos)
         while (len(stack) > 0):
@@ -148,6 +150,12 @@ class MazeGenerator():
             clear()
             render_maze(maze, path, color_index)
             time.sleep(0.01)
+
+
+def clear() -> None:
+    """"function to clear the terminal"""
+    print("\x1b[2J\x1b[3J\x1b[H", end="")
+    # os.system("clear")1
 
 
 def generate_maze(maze_class: MazeGenerator,

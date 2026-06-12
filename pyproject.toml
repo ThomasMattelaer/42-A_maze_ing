@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "mazegen"
 version = "1.0.0"
@@ -9,3 +13,6 @@ description = "A package to generate a maze"
 readme = "mazegen/README.md"
 requires-python = ">=3.10"
 dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["mazegen*"]
