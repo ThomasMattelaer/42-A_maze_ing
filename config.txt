@@ -4,3 +4,4 @@ WIDTH=10
 OUTPUT_FILE=output.txt
 PERFECT=False
 EXIT=2,2
+SEED=81

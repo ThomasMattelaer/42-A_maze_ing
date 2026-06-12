@@ -149,7 +149,7 @@ class MazeGenerator():
                 stack.pop()
             clear()
             render_maze(maze, path, color_index)
-            time.sleep(0.01)
+            time.sleep(0.1)
 
 
 def clear() -> None:

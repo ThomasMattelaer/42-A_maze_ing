@@ -137,3 +137,5 @@ if __name__ == "__main__":
         print(f"ERROR: {e}")
     except KeyboardInterrupt as e:
         print(f"ERROR: {e}")
+    except EOFError as e:
+        print(f"ERROR: {e}")
