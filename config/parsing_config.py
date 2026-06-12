@@ -2,10 +2,17 @@ from typing import Any
 
 
 class ConfigError(ValueError):
+    """Custom error class"""
     pass
 
 
 def parsing_config(filename: str) -> dict[str, str]:
+    """Parsing the filename that is used to make the configuration of the maze
+
+        ARGS: a .txt filename as string
+
+        RETURNS: return a dict with the key value of the filename
+    """
     config_dict: dict[str, str] = {}
     with open(filename) as f:
         content = f.read()
@@ -108,6 +115,11 @@ def parsing_config(filename: str) -> dict[str, str]:
 
 
 def parsing_output(filename: str) -> dict[str, Any]:
+    """Function to set properly the type of the dict
+        ARGS: filename in str to passs to the fucntion parsing_config
+
+        Returns: a dict that contain a string key and different type of value
+    """
     config = parsing_config(filename)
     entry_row = int(config["ENTRY"].split(",")[0])
     entry_col = int(config["ENTRY"].split(",")[1])
@@ -129,6 +141,12 @@ def parsing_output(filename: str) -> dict[str, Any]:
 
 
 def parsing_main(filename: str) -> dict[str, Any]:
+    """catch the error of the previous functions and share it with the main
+
+        ARGS: filename in str to passs to the fucntion parsing_config
+
+        Returns: a dict that contain a string key and different type of value
+    """
     try:
         return parsing_output(filename)
     except (ConfigError, ValueError, FileNotFoundError, OSError) as e:

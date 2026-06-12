@@ -36,6 +36,7 @@ LOSER_FRAMES = [
 
 
 def loser() -> None:
+    """ascii code to display when the program ends without success"""
     for _ in range(6):
         for frame in LOSER_FRAMES:
             os.system('clear')

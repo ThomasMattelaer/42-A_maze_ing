@@ -91,7 +91,7 @@ class MazeGenerator():
 
         if self._seed is not None:
             random.seed(self._seed)
-            
+
         def oddNumber(a: int, b: int) -> int:
             """function to only have odd number"""
             number = random.randint(a, b)
@@ -172,11 +172,19 @@ COLORS = [
 
 
 def make_block(color: int) -> str:
+    """Create a block to display the maze
+    Args: a number between 0 and 256
+    Returns: the string to display with the ansicode
+    """
     return f"\x1b[38;5;{color}m██\x1b[0m"
 
 
 def mapping_color(path: bool, color_index: int) -> dict[int, str]:
-
+    """help to create the correct set of function for the correct type block
+    Args: path is true or false to show or not the path, color_index define
+      which set of color
+    Returns: a dict with the type of block as a int and the str to display
+    """
     color = COLORS[color_index]
     mapping = {
         0: make_block(color[0]),
@@ -196,7 +204,10 @@ def mapping_color(path: bool, color_index: int) -> dict[int, str]:
 
 def render_maze(maze: list[list[int]], path: bool,
                 color_index: int = 0) -> None:
-    """"print the matrix"""
+    """"print the matrix
+    Args: maze, a 2d matrix, path is a bool to display or not, color_index
+      define the set of color
+    """
 
     chars = mapping_color(path, color_index)
     for row in maze:

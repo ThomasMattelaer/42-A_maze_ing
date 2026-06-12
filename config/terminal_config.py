@@ -32,7 +32,11 @@ def clear() -> None:
 
 def move_entry(maze: list[list[int]], entry: tuple[int, int],
                direction: tuple[int, int]) -> tuple[int, int]:
-    """Move cursor to the position requested"""
+    """Move cursor to the position requested
+        ARGS: the maze that is a 2d matrix, entry and direction that are bot
+          tuples to indicate coord
+        Returns: a tuple of the new entry coord
+    """
     row, col = entry
     new_row, new_col = row + direction[0], col + direction[1]
     if (maze[new_row][new_col] in (0, 4, 6)):

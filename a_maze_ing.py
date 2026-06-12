@@ -7,6 +7,7 @@ from animation import celebrate, loser
 
 
 class GameContext():
+    """Class to handle the state of the maze afteer the useraction"""
 
     def __init__(self,
                  maze_class: MazeGenerator,
@@ -27,6 +28,11 @@ class GameContext():
 
 def generate(maze_class: MazeGenerator, path: bool = True,
              color_index: int = 0) -> list[list[int]]:
+    """Helper to consolidate all the functions to generate
+    Args: maze_class, the instance of the maze, path is a boolean,
+    color index to define the theme
+    Returns: a 2d matrix
+    """
     maze = generate_maze(maze_class, path, color_index)
     path_solver = solve(maze_class._entry, maze_class._exit, maze,
                         path, color_index)
@@ -48,6 +54,10 @@ def extend_tuple(tuple: tuple[int, int]) -> tuple[int, int]:
 
 
 def handle_input(ctx: GameContext) -> bool:
+    """Helper to send the state to the instance of the class GameContext
+    Args: ctx a GameContext instance
+    Returns: a bool to stop or not the programm
+    """
     key = get_key()
 
     MOVES = {"a": (0, -1), "d": (0, 1), "s": (1, 0), "w": (-1, 0)}

@@ -26,6 +26,7 @@ FIREWORKS_FRAMES = [
 
 
 def celebrate() -> None:
+    """Function to display ascii code when program is over"""
     for _ in range(10):
         for frame in FIREWORKS_FRAMES:
             os.system('clear')

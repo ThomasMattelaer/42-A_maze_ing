@@ -7,7 +7,11 @@ import time
 def solve(entry: tuple[int, int], exit: tuple[int, int],
           maze: list[list[int]],
           path: bool = True, color_index: int = 0) -> str:
-    """finding the best path thanks to the BSF algorithm"""
+    """finding the best path thanks to the BSF algorithm
+    Args: entry and exit are tuple of coord, maze is a 2d matrix and
+    path a boolean
+    Returns: return the output str
+    """
     directions = [
         ("N", (-1, 0), (-2, 0)),
         ("E", (0, 1), (0, 2)),
