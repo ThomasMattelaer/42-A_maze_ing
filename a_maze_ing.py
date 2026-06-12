@@ -104,7 +104,7 @@ if __name__ == "__main__":
                                    config["exit"],
                                    config["output_file"],
                                    config["perfect"],
-                                   81
+                                   config["seed"]
                                    )
         clear()
         maze = generate(maze_class, True)
