@@ -223,6 +223,8 @@ def render_maze(maze: list[list[int]], path: bool,
         for cell in row:
             line += chars[cell]
         print(f"{line}")
+    if (((len(maze[0]) - 1) / 2) <= 10 and ((len(maze) - 1) / 2) <= 10):
+        print("Nope, no 42 this time 🖕🖕🖕!!")
     print("\n1. Re-generate the maze")
     print("2. Hide/Show the ideal path")
     print("3. Change the color of the maze")
