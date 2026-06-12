@@ -1,0 +1,111 @@
+*This project has been created as part of the 42 curriculum by tmattela, josamba-.*
+
+# mazegen
+
+A small, dependency-free maze generator that can be reused in other projects.
+
+
+## Installation
+
+Build the package from the repository root (a standard Python build), then
+install the generated wheel:
+
+```sh
+python -m build                       # produces dist/mazegen-1.0.0-py3-none-any.whl
+pip install dist/mazegen-1.0.0-py3-none-any.whl
+```
+
+Requires Python **3.10+**. No external runtime dependencies.
+
+## Basic usage
+
+```python
+from mazegen import MazeGenerator, generate_maze, solve
+
+# 1. Instantiate the generator
+gen = MazeGenerator(
+    height=15,
+    width=15,
+    entry=(0, 0),          # (x, y) -> x is the column, y is the row
+    exit=(14, 14),
+    output_file="maze.txt",
+    perfect=True,
+)
+
+# 2. Build the maze structure
+maze = generate_maze(gen)  # init grid + optional "42" pattern + DFS carving
+
+# 3. Get a solution (shortest path as a string of N/E/S/W moves)
+path = solve(gen._entry, gen._exit, maze)
+print(path)                # e.g. "SSEESWS..."
+```
+
+## Custom parameters
+
+`MazeGenerator(height, width, entry, exit, output_file, perfect, seed=None)`
+
+| Parameter     | Type               | Meaning                                              |
+|---------------|--------------------|------------------------------------------------------|
+| `height`      | `int`              | number of cells vertically                           |
+| `width`       | `int`              | number of cells horizontally                         |
+| `entry`       | `tuple[int, int]`  | entry cell `(x, y)`                                   |
+| `exit`        | `tuple[int, int]`  | exit cell `(x, y)`                                    |
+| `output_file` | `str`              | default output filename                              |
+| `perfect`     | `bool`             | `True` = single path; `False` = loops allowed        |
+| `seed`        | `int \| None`      | fix the RNG for **reproducible** mazes               |
+
+```python
+# Reproducible maze: the same seed always yields the same maze
+gen = MazeGenerator(20, 30, (0, 0), (29, 19), "maze.txt", True, seed=42)
+maze = generate_maze(gen)
+```
+
+## Accessing the generated structure
+
+`generate_maze()` returns the maze as a **2-D matrix** (`list[list[int]]`) of
+size `(2·height + 1) × (2·width + 1)`. Cells live at **odd** indices, walls
+live between them. Each value means:
+
+| Value | Meaning                |
+|-------|------------------------|
+| `0`   | open passage           |
+| `1`   | wall                   |
+| `3`   | entry cell             |
+| `4`   | exit cell              |
+| `5`   | "42" pattern (closed)  |
+| `6`   | solution path cell     |
+
+```python
+maze = generate_maze(gen)
+
+# the cell (x, y) sits at matrix[y*2 + 1][x*2 + 1]
+top_left = maze[1][1]
+
+# inspect dimensions
+rows, cols = len(maze), len(maze[0])
+```
+
+> The in-memory structure is **not** the same format as the hexadecimal output
+> file. Use `write_output()` (in the application layer) to produce that file.
+
+## Accessing a solution
+
+`solve(entry, exit, maze)` runs a **Breadth-First Search** and returns the
+**shortest path** from entry to exit as a string of moves (`N`, `E`, `S`, `W`).
+It also marks the path cells with value `6` in the matrix.
+
+```python
+path = solve(gen._entry, gen._exit, maze)
+print(len(path), "steps:", path)
+```
+
+## Public API
+
+| Symbol             | Description                                            |
+|--------------------|--------------------------------------------------------|
+| `MazeGenerator`    | the generator class                                    |
+| `generate_maze()`  | builds and returns a full maze matrix                  |
+| `solve()`          | BFS shortest-path solver                               |
+| `render_maze()`    | terminal rendering of a maze                           |
+| `write_output()`   | hexadecimal export to a file                           |
+| `COLORS`           | the available colour palettes                          |
