@@ -89,12 +89,11 @@ if __name__ == "__main__":
     try:
         config_file = sys.argv[1]
         config = parsing_main(config_file)
-        output_file = "output_" + os.path.basename(config_file)
         maze_class = MazeGenerator(config["height"],
                                    config["width"],
                                    config["entry"],
                                    config["exit"],
-                                   output_file,
+                                   config["output_file"],
                                    config["perfect"]
                                    )
         clear()
