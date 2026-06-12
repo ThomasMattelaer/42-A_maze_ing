@@ -48,7 +48,7 @@ def parsing_config(filename: str) -> dict[str, str]:
             config_dict.update({parts[0]: parts[1]})
 
     required_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT",
-                     "OUTPUT_FILE", "PERFECT", "SEED"]
+                     "OUTPUT_FILE", "PERFECT"]
 
     if not all(key in config_dict for key in required_keys):
         raise ConfigError(
@@ -130,7 +130,9 @@ def parsing_output(filename: str) -> dict[str, Any]:
     exit_col = int(config["EXIT"].split(",")[1])
     exit = (exit_row, exit_col)
     perfect = config["PERFECT"] == "True"
-    seed = int(config["SEED"])
+    seed = None
+    if "SEED" in config:
+        seed = int(config["SEED"])
     config_dict = {
         "output_file": config["OUTPUT_FILE"],
         "width": int(config["WIDTH"]),
