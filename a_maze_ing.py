@@ -1,5 +1,4 @@
 import sys
-import os
 import random
 from mazegen import MazeGenerator, solve, render_maze, generate_maze, COLORS
 from mazegen import write_output
@@ -94,7 +93,8 @@ if __name__ == "__main__":
                                    config["entry"],
                                    config["exit"],
                                    config["output_file"],
-                                   config["perfect"]
+                                   config["perfect"],
+                                   81
                                    )
         clear()
         maze = generate(maze_class, True)

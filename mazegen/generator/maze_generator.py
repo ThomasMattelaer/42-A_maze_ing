@@ -22,6 +22,7 @@ class MazeGenerator():
         self._exit = exit
         self._output_file = output_file
         self._perfect = perfect
+        self._seed = seed
         if seed is not None:
             random.seed(seed)
 
@@ -88,6 +89,9 @@ class MazeGenerator():
                       color_index: int = 0) -> None:
         """Generate all the path of the maze with the DFS algorithm"""
 
+        if self._seed is not None:
+            random.seed(self._seed)
+            
         def oddNumber(a: int, b: int) -> int:
             """function to only have odd number"""
             number = random.randint(a, b)
